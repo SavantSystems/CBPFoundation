@@ -22,10 +22,11 @@
  THE SOFTWARE.
  */
 
-#define CBPPerformUnknownSelector(returnType, target, selector) ((returnType (*)(id, SEL))[target methodForSelector:selector])(target, selector);
-
-#define CBPFunctionForSelector(name, returnType, target, selector) IMP imp__LINE__ = [target methodForSelector:selector]; returnType (*name)(id, SEL) = (returnType (*)(id, SEL))imp__LINE__;
-
-@interface CBPRuntime : NSObject
-
-@end
+@import Foundation;
+#import "CBPRuntime.h"
+#import "CBPCollectionTypes.h"
+#import "NSArray+CBPExtensions.h"
+#import "NSMutableArray+CBPExtensions.h"
+#import "NSThread+CBPExtensions.h"
+#import "NSRunLoop+CBPExtensions.h"
+#import "CBPBackgroundTask.h"

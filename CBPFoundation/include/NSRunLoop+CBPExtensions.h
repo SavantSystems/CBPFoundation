@@ -22,8 +22,18 @@
  THE SOFTWARE.
  */
 
-@interface NSMutableArray (CBPExtensions)
+#import <CBPFoundation/CBPFoundation.h>
 
-- (void)filterArrayUsingBlock:(CBPArrayFilteringBlock)block;
+typedef BOOL (^CBPRunLoopConditionBlock)(void);
+
+@interface NSRunLoop (CBPExtensions)
+
+- (void)cbp_runMode:(NSString *)runLoopMode untilCondition:(CBPRunLoopConditionBlock)block;
+
+- (void)cbp_runUntilCondition:(CBPRunLoopConditionBlock)block;
+
+- (void)cbp_runMode:(NSString *)runLoopMode untilTarget:(id)target selector:(SEL)selector matchesCondition:(BOOL)condition;
+
+- (void)cbp_runUntilTarget:(id)target selector:(SEL)selector matchesCondition:(BOOL)condition;
 
 @end

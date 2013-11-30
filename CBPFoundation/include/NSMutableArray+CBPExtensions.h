@@ -22,16 +22,11 @@
  THE SOFTWARE.
  */
 
-typedef id (^CBPArrayMappingBlock)(id object);
+#import <CBPFoundation/CBPFoundation.h>
+#import "CBPCollectionTypes.h"
 
-typedef BOOL (^CBPArrayFilteringBlock)(id object);
+@interface NSMutableArray (CBPExtensions)
 
-@interface NSArray (CBPExtensions)
-
-- (NSArray *)arrayByMappingBlock:(CBPArrayMappingBlock)block;
-
-- (NSArray *)arrayByMappingSelector:(SEL)selector;
-
-- (NSArray *)filteredArrayUsingBlock:(CBPArrayFilteringBlock)block;
+- (void)filterArrayUsingBlock:(CBPArrayFilteringBlock)block;
 
 @end

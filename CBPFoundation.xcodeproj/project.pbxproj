@@ -25,8 +25,6 @@
 		3EFF918B184A2F760082E11C /* NSThread+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF9183184A2F760082E11C /* NSThread+CBPExtensions.m */; };
 		3EFF9190184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF918F184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m */; };
 		3EFF9191184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF918F184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m */; };
-		3EFF9195184A8C130082E11C /* CBPRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF9194184A8C130082E11C /* CBPRuntime.m */; };
-		3EFF9196184A8C130082E11C /* CBPRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF9194184A8C130082E11C /* CBPRuntime.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,28 +51,28 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3EB13C42184AB0A30089FFB2 /* CBPFoundation-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBPFoundation-Prefix.pch"; sourceTree = "<group>"; };
+		3EB13C43184AB1240089FFB2 /* CBPCollectionTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPCollectionTypes.h; path = include/CBPCollectionTypes.h; sourceTree = "<group>"; };
 		3EFF9153184A2F550082E11C /* libCBPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCBPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EFF9156184A2F550082E11C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		3EFF915A184A2F550082E11C /* CBPFoundation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CBPFoundation-Prefix.pch"; sourceTree = "<group>"; };
-		3EFF915B184A2F550082E11C /* CBPFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CBPFoundation.h; sourceTree = "<group>"; };
+		3EFF915B184A2F550082E11C /* CBPFoundation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CBPFoundation.h; path = include/CBPFoundation.h; sourceTree = "<group>"; };
 		3EFF9163184A2F550082E11C /* CBPFoundationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CBPFoundationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EFF9164184A2F550082E11C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3EFF9167184A2F550082E11C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		3EFF916E184A2F550082E11C /* CBPFoundationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CBPFoundationTests-Info.plist"; sourceTree = "<group>"; };
 		3EFF9170184A2F550082E11C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3EFF9172184A2F550082E11C /* CBPFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CBPFoundationTests.m; sourceTree = "<group>"; };
-		3EFF917C184A2F760082E11C /* CBPBackgroundTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPBackgroundTask.h; sourceTree = "<group>"; };
-		3EFF917D184A2F760082E11C /* CBPBackgroundTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPBackgroundTask.m; sourceTree = "<group>"; };
-		3EFF917E184A2F760082E11C /* NSArray+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CBPExtensions.h"; sourceTree = "<group>"; };
-		3EFF917F184A2F760082E11C /* NSArray+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+CBPExtensions.m"; sourceTree = "<group>"; };
-		3EFF9180184A2F760082E11C /* NSMutableArray+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+CBPExtensions.h"; sourceTree = "<group>"; };
-		3EFF9181184A2F760082E11C /* NSMutableArray+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+CBPExtensions.m"; sourceTree = "<group>"; };
-		3EFF9182184A2F760082E11C /* NSThread+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+CBPExtensions.h"; sourceTree = "<group>"; };
-		3EFF9183184A2F760082E11C /* NSThread+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+CBPExtensions.m"; sourceTree = "<group>"; };
-		3EFF918E184A6A9D0082E11C /* NSRunLoop+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSRunLoop+CBPExtensions.h"; sourceTree = "<group>"; };
-		3EFF918F184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSRunLoop+CBPExtensions.m"; sourceTree = "<group>"; };
-		3EFF9193184A8C130082E11C /* CBPRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPRuntime.h; sourceTree = "<group>"; };
-		3EFF9194184A8C130082E11C /* CBPRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPRuntime.m; sourceTree = "<group>"; };
+		3EFF917C184A2F760082E11C /* CBPBackgroundTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPBackgroundTask.h; path = include/CBPBackgroundTask.h; sourceTree = "<group>"; };
+		3EFF917D184A2F760082E11C /* CBPBackgroundTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CBPBackgroundTask.m; path = src/CBPBackgroundTask.m; sourceTree = "<group>"; };
+		3EFF917E184A2F760082E11C /* NSArray+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+CBPExtensions.h"; path = "include/NSArray+CBPExtensions.h"; sourceTree = "<group>"; };
+		3EFF917F184A2F760082E11C /* NSArray+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+CBPExtensions.m"; path = "src/NSArray+CBPExtensions.m"; sourceTree = "<group>"; };
+		3EFF9180184A2F760082E11C /* NSMutableArray+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+CBPExtensions.h"; path = "include/NSMutableArray+CBPExtensions.h"; sourceTree = "<group>"; };
+		3EFF9181184A2F760082E11C /* NSMutableArray+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+CBPExtensions.m"; path = "src/NSMutableArray+CBPExtensions.m"; sourceTree = "<group>"; };
+		3EFF9182184A2F760082E11C /* NSThread+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+CBPExtensions.h"; path = "include/NSThread+CBPExtensions.h"; sourceTree = "<group>"; };
+		3EFF9183184A2F760082E11C /* NSThread+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+CBPExtensions.m"; path = "src/NSThread+CBPExtensions.m"; sourceTree = "<group>"; };
+		3EFF918E184A6A9D0082E11C /* NSRunLoop+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSRunLoop+CBPExtensions.h"; path = "include/NSRunLoop+CBPExtensions.h"; sourceTree = "<group>"; };
+		3EFF918F184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSRunLoop+CBPExtensions.m"; path = "src/NSRunLoop+CBPExtensions.m"; sourceTree = "<group>"; };
+		3EFF9193184A8C130082E11C /* CBPRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPRuntime.h; path = include/CBPRuntime.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +142,7 @@
 		3EFF9159184A2F550082E11C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				3EFF915A184A2F550082E11C /* CBPFoundation-Prefix.pch */,
+				3EB13C42184AB0A30089FFB2 /* CBPFoundation-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -183,6 +181,7 @@
 		3EFF918D184A30BA0082E11C /* Collection Stuff */ = {
 			isa = PBXGroup;
 			children = (
+				3EB13C43184AB1240089FFB2 /* CBPCollectionTypes.h */,
 				3EFF917E184A2F760082E11C /* NSArray+CBPExtensions.h */,
 				3EFF917F184A2F760082E11C /* NSArray+CBPExtensions.m */,
 				3EFF9180184A2F760082E11C /* NSMutableArray+CBPExtensions.h */,
@@ -195,7 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				3EFF9193184A8C130082E11C /* CBPRuntime.h */,
-				3EFF9194184A8C130082E11C /* CBPRuntime.m */,
 			);
 			name = "General Stuff";
 			sourceTree = "<group>";
@@ -285,7 +283,6 @@
 				3EFF918A184A2F760082E11C /* NSThread+CBPExtensions.m in Sources */,
 				3EFF9186184A2F760082E11C /* NSArray+CBPExtensions.m in Sources */,
 				3EFF9184184A2F760082E11C /* CBPBackgroundTask.m in Sources */,
-				3EFF9195184A8C130082E11C /* CBPRuntime.m in Sources */,
 				3EFF9188184A2F760082E11C /* NSMutableArray+CBPExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,7 +295,6 @@
 				3EFF9187184A2F760082E11C /* NSArray+CBPExtensions.m in Sources */,
 				3EFF9173184A2F550082E11C /* CBPFoundationTests.m in Sources */,
 				3EFF918B184A2F760082E11C /* NSThread+CBPExtensions.m in Sources */,
-				3EFF9196184A8C130082E11C /* CBPRuntime.m in Sources */,
 				3EFF9191184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m in Sources */,
 				3EFF9189184A2F760082E11C /* NSMutableArray+CBPExtensions.m in Sources */,
 			);
@@ -488,6 +484,7 @@
 				3EFF9178184A2F550082E11C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3EFF9179184A2F550082E11C /* Build configuration list for PBXNativeTarget "CBPFoundationTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +493,7 @@
 				3EFF917B184A2F550082E11C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

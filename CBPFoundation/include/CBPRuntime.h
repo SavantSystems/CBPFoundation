@@ -22,32 +22,12 @@
  THE SOFTWARE.
  */
 
-@interface NSThread (CBPExtensions)
+#import <CBPFoundation/CBPFoundation.h>
 
-/**
- *  Creates and returns a new thread that is ready for events to be scheduled on it. To correctly stop it, call -cbp_stop.
- *
- *  @return a newly created thread
- */
-+ (NSThread *)cbp_runningThread;
+#define CBPPerformUnknownSelector(returnType, target, selector) ((returnType (*)(id, SEL))[target methodForSelector:selector])(target, selector);
 
-/**
- *  Cleanly stops a thread returned by cbp_runningThread.
- */
-- (void)cbp_stop;
+#define CBPFunctionForSelector(name, returnType, target, selector) IMP imp__LINE__ = [target methodForSelector:selector]; returnType (*name)(id, SEL) = (returnType (*)(id, SEL))imp__LINE__;
 
-/**
- *  Performs a block synchronously on the receiving thread.
- *
- *  @param block the block to perform
- */
-- (void)cbp_performBlockSync:(dispatch_block_t)block;
-
-/**
- *  Performs a block asynchronously on the receiving thread. If the target thread and the current thread are the same, the block will be performed on the next iteration of the runloop.
- *
- *  @param block the block to perform
- */
-- (void)cbp_performBlockAsync:(dispatch_block_t)block;
+@interface CBPRuntime : NSObject
 
 @end

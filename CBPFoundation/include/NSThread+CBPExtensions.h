@@ -22,10 +22,34 @@
  THE SOFTWARE.
  */
 
-@import Foundation;
-#import "CBPRuntime.h"
-#import "NSArray+CBPExtensions.h"
-#import "NSMutableArray+CBPExtensions.h"
-#import "NSThread+CBPExtensions.h"
-#import "NSRunLoop+CBPExtensions.h"
-#import "CBPBackgroundTask.h"
+#import <CBPFoundation/CBPFoundation.h>
+
+@interface NSThread (CBPExtensions)
+
+/**
+ *  Creates and returns a new thread that is ready for events to be scheduled on it. To correctly stop it, call -cbp_stop.
+ *
+ *  @return a newly created thread
+ */
++ (NSThread *)cbp_runningThread;
+
+/**
+ *  Cleanly stops a thread returned by cbp_runningThread.
+ */
+- (void)cbp_stop;
+
+/**
+ *  Performs a block synchronously on the receiving thread.
+ *
+ *  @param block the block to perform
+ */
+- (void)cbp_performBlockSync:(dispatch_block_t)block;
+
+/**
+ *  Performs a block asynchronously on the receiving thread. If the target thread and the current thread are the same, the block will be performed on the next iteration of the runloop.
+ *
+ *  @param block the block to perform
+ */
+- (void)cbp_performBlockAsync:(dispatch_block_t)block;
+
+@end

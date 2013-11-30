@@ -22,16 +22,15 @@
  THE SOFTWARE.
  */
 
-typedef BOOL (^CBPRunLoopConditionBlock)(void);
+#import <CBPFoundation/CBPFoundation.h>
+#import "CBPCollectionTypes.h"
 
-@interface NSRunLoop (CBPExtensions)
+@interface NSArray (CBPExtensions)
 
-- (void)cbp_runMode:(NSString *)runLoopMode untilCondition:(CBPRunLoopConditionBlock)block;
+- (NSArray *)arrayByMappingBlock:(CBPArrayMappingBlock)block;
 
-- (void)cbp_runUntilCondition:(CBPRunLoopConditionBlock)block;
+- (NSArray *)arrayByMappingSelector:(SEL)selector;
 
-- (void)cbp_runMode:(NSString *)runLoopMode untilTarget:(id)target selector:(SEL)selector matchesCondition:(BOOL)condition;
-
-- (void)cbp_runUntilTarget:(id)target selector:(SEL)selector matchesCondition:(BOOL)condition;
+- (NSArray *)filteredArrayUsingBlock:(CBPArrayFilteringBlock)block;
 
 @end

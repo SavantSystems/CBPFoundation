@@ -23,6 +23,7 @@
  */
 
 #import <XCTest/XCTest.h>
+#import <CBPFoundation/CBPFoundation.h>
 
 @interface CBPFoundationTests : XCTestCase
 

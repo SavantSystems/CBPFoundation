@@ -43,6 +43,8 @@
     [super tearDown];
 }
 
+#pragma mark - Mapping tests
+
 - (void)testArraySelectorMapping
 {
     NSArray *testArray = @[@"1", @"2",];
@@ -71,6 +73,8 @@
     }
 }
 
+#pragma mark - Filtering tests
+
 - (void)testImmutableArrayFiltering
 {
     NSArray *testArray = @[@"1", @"2",];
@@ -96,6 +100,8 @@
     
     XCTAssert([testArray isEqualToArray:@[@"1"]], @"Filtering did not work!");
 }
+
+#pragma mark - Take tests
 
 - (void)testTakeZero
 {
@@ -125,6 +131,8 @@
     XCTAssert([testArray isEqualToArray:[testArray arrayByTakingObjects:100]], @"Taking more objects failed");
 }
 
+#pragma mark - Drop tests
+
 - (void)testDropZero
 {
     NSArray *testArray = @[@"1", @"2"];
@@ -151,6 +159,23 @@
     NSArray *testArray = @[@"1", @"2"];
     
     XCTAssert([@[] isEqualToArray:[testArray arrayByDroppingObjects:100]], @"Dropping more objects failed");
+}
+
+#pragma mark - Thread tests
+
+- (void)testBasicThreadExecution
+{
+    NSThread *thread = [NSThread cbp_runningThread];
+    
+    __block BOOL someVariable = NO;
+    
+    [thread cbp_performBlockSync:^{
+        someVariable = YES;
+    }];
+    
+    [thread cbp_stop];
+    
+    XCTAssert(someVariable, @"Thread synchronous execution did not work");
 }
 
 @end

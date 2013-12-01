@@ -62,6 +62,10 @@
     
     NSArray *filteredArray = nil;
     
+    //-------------------------------------------------------------------
+    // Only create a new array if there are items to remove. Otherwise,
+    // return the receiver.
+    //-------------------------------------------------------------------
     if ([indexSet count])
     {
         NSMutableArray *mCopy = [self mutableCopy];

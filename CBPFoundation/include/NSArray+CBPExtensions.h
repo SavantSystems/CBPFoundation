@@ -30,7 +30,7 @@
 /**
  *  Returns a new array that is the result of performing the given block on each object in the receiving array.
  *
- *  @param block A block that will be performed with each object in the array
+ *  @param block A block that will be performed with each object in the array.
  *
  *  @return A new array that is the result of performing the given block on each object in the receiving array.
  */
@@ -39,7 +39,7 @@
 /**
  *  Returns a new array that is the result of sending the message identified by the given selector to each object in the receiving array.
  *
- *  @param selector A selector that identifies the message to send to the objects in the array. The method must not take any arguments, and must not have the side effect of modifying the receiving array.
+ *  @param selector A selector that identifies the message to send to the objects in the array.
  *
  *  @return A new array that is the result of sending the message identified by the given selector to each object in the receiving array.
  */

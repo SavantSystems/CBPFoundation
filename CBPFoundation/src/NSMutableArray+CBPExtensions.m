@@ -31,10 +31,12 @@
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
     
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
         if (!block(obj))
         {
             [indexSet addIndex:idx];
         }
+        
     }];
     
     [self removeObjectsAtIndexes:indexSet];

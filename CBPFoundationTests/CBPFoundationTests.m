@@ -178,4 +178,34 @@
     XCTAssert(someVariable, @"Thread synchronous execution did not work");
 }
 
+#pragma mark - CBPBackgroundTask tests
+
+- (void)testBasicBackgroundTask
+{
+    CBPBackgroundTask *task = [[CBPBackgroundTask alloc] init];
+    
+    __block BOOL someVariable = NO;
+    
+    task.startBlock = ^id {
+        
+        someVariable = YES;
+        return nil;
+        
+    };
+    
+    task.stopBlock = ^(id object) {
+        
+        someVariable = NO;
+        
+    };
+    
+    [task start];
+    
+    XCTAssert(someVariable, @"Task did not start");
+    
+    [task stop];
+    
+    XCTAssert(!someVariable, @"Task did not finish");
+}
+
 @end

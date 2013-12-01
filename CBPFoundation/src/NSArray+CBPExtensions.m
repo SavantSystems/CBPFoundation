@@ -26,6 +26,8 @@
 
 @implementation NSArray (CBPExtensions)
 
+#pragma mark - Mapping
+
 - (NSArray *)arrayByMappingBlock:(CBPArrayMappingBlock)block
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -46,6 +48,8 @@
         
     }];
 }
+
+#pragma mark - Filtering
 
 - (NSArray *)filteredArrayUsingBlock:(CBPArrayFilteringBlock)block
 {
@@ -78,6 +82,48 @@
     }
     
     return filteredArray;
+}
+
+#pragma mark - Creating subarrays
+
+- (NSArray *)arrayByTakingObjects:(NSUInteger)numberOfObjects
+{
+    NSArray *array = nil;
+    
+    if ([self count] < numberOfObjects)
+    {
+        array = self;
+    }
+    else if (numberOfObjects)
+    {
+        array = [self subarrayWithRange:NSMakeRange(0, numberOfObjects)];
+    }
+    else
+    {
+        array = @[];
+    }
+    
+    return array;
+}
+
+- (NSArray *)arrayByDroppingObjects:(NSUInteger)numberOfObjects
+{
+    NSArray *array = nil;
+    
+    if (numberOfObjects == 0)
+    {
+        array = self;
+    }
+    else if (numberOfObjects < [self count])
+    {
+        array = [self subarrayWithRange:NSMakeRange(numberOfObjects, [self count] - numberOfObjects)];
+    }
+    else
+    {
+        array = @[];
+    }
+    
+    return array;
 }
 
 @end

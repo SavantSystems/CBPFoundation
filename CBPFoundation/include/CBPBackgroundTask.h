@@ -95,7 +95,7 @@ typedef void (^CBPBackgroundTaskStopBlock)(id object);
 /**
  *  Start your task here. This method will be performed from the background thread. This method must not block.
  *
- *  @param task The task that is starting
+ *  @param task The task that is startin.
  *
  *  @return When applicable, you may choose to return the object that you started. For example, an NSStream subclass. The background task will own the object until the task is stopped. If this is not applicable or desired, just return nil.
  */
@@ -104,8 +104,8 @@ typedef void (^CBPBackgroundTaskStopBlock)(id object);
 /**
  *  End your task here and prepare for reuse.
  *
- *  @param task   The task that is ending
- *  @param object The object returned by the start implementation, or nil
+ *  @param task   The task that is ending.
+ *  @param object The object returned by the start implementation, or nil.
  */
 - (void)stopBackgroundTask:(CBPBackgroundTask *)task withObject:(id)object;
 

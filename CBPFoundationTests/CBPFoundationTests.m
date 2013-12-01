@@ -84,7 +84,7 @@
     XCTAssert([result isEqualToArray:@[@"1"]], @"Filtering did not work!");
 }
 
-- (void)testMmutableArrayFiltering
+- (void)testMutableArrayFiltering
 {
     NSMutableArray *testArray = [@[@"1", @"2",] mutableCopy];
     
@@ -95,6 +95,62 @@
     }];
     
     XCTAssert([testArray isEqualToArray:@[@"1"]], @"Filtering did not work!");
+}
+
+- (void)testTakeZero
+{
+    NSArray *testArray = @[@"1", @"2"];
+    
+    XCTAssert([@[] isEqualToArray:[testArray arrayByTakingObjects:0]], @"Taking zero objects failed");
+}
+
+- (void)testTakeSome
+{
+    NSArray *testArray = @[@"1", @"2"];
+    
+    XCTAssert([@[@"1"] isEqualToArray:[testArray arrayByTakingObjects:1]], @"Taking some objects failed");
+}
+
+- (void)testTakeAll
+{
+    NSArray *testArray = @[@"1", @"2"];
+    
+    XCTAssert([testArray isEqualToArray:[testArray arrayByTakingObjects:2]], @"Taking all objects failed");
+}
+
+- (void)testTakeMore
+{
+    NSArray *testArray = @[@"1", @"2"];
+    
+    XCTAssert([testArray isEqualToArray:[testArray arrayByTakingObjects:100]], @"Taking more objects failed");
+}
+
+- (void)testDropZero
+{
+    NSArray *testArray = @[@"1", @"2"];
+    
+    XCTAssert([testArray isEqualToArray:[testArray arrayByDroppingObjects:0]], @"Dropping zero objects failed");
+}
+
+- (void)testDropSome
+{
+    NSArray *testArray = @[@"1", @"2"];
+    
+    XCTAssert([@[@"2"] isEqualToArray:[testArray arrayByDroppingObjects:1]], @"Dropping some objects failed");
+}
+
+- (void)testDropAll
+{
+    NSArray *testArray = @[@"1", @"2"];
+    
+    XCTAssert([@[] isEqualToArray:[testArray arrayByDroppingObjects:2]], @"Dropping all objects failed");
+}
+
+- (void)testDropMore
+{
+    NSArray *testArray = @[@"1", @"2"];
+    
+    XCTAssert([@[] isEqualToArray:[testArray arrayByDroppingObjects:100]], @"Dropping more objects failed");
 }
 
 @end

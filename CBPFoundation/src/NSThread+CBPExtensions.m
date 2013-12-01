@@ -62,10 +62,12 @@ static NSString *const CBPThreadKeyThread = @"thread";
         
         [currentThread performSelector:@selector(cbp_dummy) withObject:nil afterDelay:0.0];
         
-        [[NSRunLoop currentRunLoop] cbp_runMode:NSDefaultRunLoopMode
-                                untilTarget:currentThread
-                                   selector:@selector(isCancelled)
-                           matchesCondition:YES];
+        NSRunLoop *currentRunLoop = [NSRunLoop currentRunLoop];
+        
+        while (!currentThread.isCancelled)
+        {
+            [currentRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
     }
 }
 

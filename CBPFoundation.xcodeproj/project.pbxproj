@@ -23,8 +23,6 @@
 		3EFF9189184A2F760082E11C /* NSMutableArray+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF9181184A2F760082E11C /* NSMutableArray+CBPExtensions.m */; };
 		3EFF918A184A2F760082E11C /* NSThread+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF9183184A2F760082E11C /* NSThread+CBPExtensions.m */; };
 		3EFF918B184A2F760082E11C /* NSThread+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF9183184A2F760082E11C /* NSThread+CBPExtensions.m */; };
-		3EFF9190184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF918F184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m */; };
-		3EFF9191184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EFF918F184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +68,6 @@
 		3EFF9181184A2F760082E11C /* NSMutableArray+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+CBPExtensions.m"; path = "src/NSMutableArray+CBPExtensions.m"; sourceTree = "<group>"; };
 		3EFF9182184A2F760082E11C /* NSThread+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+CBPExtensions.h"; path = "include/NSThread+CBPExtensions.h"; sourceTree = "<group>"; };
 		3EFF9183184A2F760082E11C /* NSThread+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+CBPExtensions.m"; path = "src/NSThread+CBPExtensions.m"; sourceTree = "<group>"; };
-		3EFF918E184A6A9D0082E11C /* NSRunLoop+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSRunLoop+CBPExtensions.h"; path = "include/NSRunLoop+CBPExtensions.h"; sourceTree = "<group>"; };
-		3EFF918F184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSRunLoop+CBPExtensions.m"; path = "src/NSRunLoop+CBPExtensions.m"; sourceTree = "<group>"; };
 		3EFF9193184A8C130082E11C /* CBPRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPRuntime.h; path = include/CBPRuntime.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,8 +168,6 @@
 				3EFF917D184A2F760082E11C /* CBPBackgroundTask.m */,
 				3EFF9182184A2F760082E11C /* NSThread+CBPExtensions.h */,
 				3EFF9183184A2F760082E11C /* NSThread+CBPExtensions.m */,
-				3EFF918E184A6A9D0082E11C /* NSRunLoop+CBPExtensions.h */,
-				3EFF918F184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m */,
 			);
 			name = "Thread Stuff";
 			sourceTree = "<group>";
@@ -279,7 +273,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EFF9190184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m in Sources */,
 				3EFF918A184A2F760082E11C /* NSThread+CBPExtensions.m in Sources */,
 				3EFF9186184A2F760082E11C /* NSArray+CBPExtensions.m in Sources */,
 				3EFF9184184A2F760082E11C /* CBPBackgroundTask.m in Sources */,
@@ -295,7 +288,6 @@
 				3EFF9187184A2F760082E11C /* NSArray+CBPExtensions.m in Sources */,
 				3EFF9173184A2F550082E11C /* CBPFoundationTests.m in Sources */,
 				3EFF918B184A2F760082E11C /* NSThread+CBPExtensions.m in Sources */,
-				3EFF9191184A6A9D0082E11C /* NSRunLoop+CBPExtensions.m in Sources */,
 				3EFF9189184A2F760082E11C /* NSMutableArray+CBPExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

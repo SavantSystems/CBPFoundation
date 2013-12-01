@@ -43,6 +43,18 @@
 
 - (void)start
 {
+    if (self.delegate && (self.startBlock || self.stopBlock))
+    {
+        [NSException raise:NSInternalInconsistencyException format:@"A CBPBackgroundTask may not be started with a mixed delegate and block based callback structure"];
+        return;
+    }
+    
+    if (!self.delegate && !self.startBlock && !self.stopBlock)
+    {
+        [NSException raise:NSInternalInconsistencyException format:@"A CBPBackgroundTask requires a delegate or start/stop blocks to be set before it can begin"];
+        return;
+    }
+    
     @synchronized (self)
     {
         if (self.isRunning)

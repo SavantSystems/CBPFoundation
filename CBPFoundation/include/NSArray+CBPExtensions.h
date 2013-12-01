@@ -27,10 +27,31 @@
 
 @interface NSArray (CBPExtensions)
 
+/**
+ *  Returns a new array that is the result of performing the given block on each object in the receiving array.
+ *
+ *  @param block A block that will be performed with each object in the array
+ *
+ *  @return A new array that is the result of performing the given block on each object in the receiving array.
+ */
 - (NSArray *)arrayByMappingBlock:(CBPArrayMappingBlock)block;
 
+/**
+ *  Returns a new array that is the result of sending the message identified by the given selector to each object in the receiving array.
+ *
+ *  @param selector A selector that identifies the message to send to the objects in the array. The method must not take any arguments, and must not have the side effect of modifying the receiving array.
+ *
+ *  @return A new array that is the result of sending the message identified by the given selector to each object in the receiving array.
+ */
 - (NSArray *)arrayByMappingSelector:(SEL)selector;
 
+/**
+ *  Evaluates a given block against each object in the receiving array and returns an array containing the objects for which the block returns true.
+ *
+ *  @param block The block against which to evaluate the receiving array’s elements.
+ *
+ *  @return An array containing the objects in the receiving array for which block returns true.
+ */
 - (NSArray *)filteredArrayUsingBlock:(CBPArrayFilteringBlock)block;
 
 @end

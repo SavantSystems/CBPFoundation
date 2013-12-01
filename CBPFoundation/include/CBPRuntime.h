@@ -24,10 +24,6 @@
 
 #import <CBPFoundation/CBPFoundation.h>
 
+#define CBPFunctionForSelector(name, returnType, target, selector) IMP imp##__LINE__ = [target methodForSelector:selector]; returnType (*name)(id, SEL) = (returnType (*)(id, SEL))imp##__LINE__;
+
 #define CBPPerformUnknownSelector(returnType, target, selector) ((returnType (*)(id, SEL))[target methodForSelector:selector])(target, selector);
-
-#define CBPFunctionForSelector(name, returnType, target, selector) IMP imp__LINE__ = [target methodForSelector:selector]; returnType (*name)(id, SEL) = (returnType (*)(id, SEL))imp__LINE__;
-
-@interface CBPRuntime : NSObject
-
-@end

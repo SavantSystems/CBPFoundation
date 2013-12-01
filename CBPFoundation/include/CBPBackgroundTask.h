@@ -27,15 +27,15 @@
 /**
  *  This class controls the stopping and starting of a background task. It is similar to an NSOperation, but more appropriate for a long running task that can stopped and restarted.
  *
- *  There are two ways of using this class, either delegate based or block based. The delegate based approach is given priority in the implementation and if a delegate is set any blocks are ignored.
+ *  There are two ways of using this class, either delegate based or block based. Mixing the two or not using at least one will cause an NSInternalInconsistencyException when -start is called.
  *
- *  Whichever approach is used, the start (and stop) implementation should _NEVER_ block. -start and -stop are performed synchronously on the background thread so that the thread and object properties are always read in a valid state.
+ *  Whichever approach is used, both the start and stop implementation must not block. The -start and -stop methods will not return until the respective start and stop implementations return. This is so that the 'object' and 'thread' properties are always read in a consistent state.
  */
 
 /**
  *  Start a long running task.
  *
- *  @return As a convenience, you may choose to return the object that you started. For example, some NSStream subclass. The background task will own the object until the task is stopped. This can prevent dealing with weakSelf junk.
+ *  @return When applicable, you may choose to return the object that you started. For example, an NSStream subclass. The background task will own the object until the task is stopped. This can prevent dealing with weakSelf things. If this is not applicable or desired, just return nil.
  */
 typedef id (^CBPBackgroundTaskStartBlock)(void);
 
@@ -56,12 +56,12 @@ typedef void (^CBPBackgroundTaskStopBlock)(id object);
 @property (weak) id<CBPBackgroundTaskDelegate> delegate;
 
 /**
- *  A block to start your task. It will be performed on a dedicated background thread.
+ *  A block to start your task. It will be performed on a dedicated background thread. This block must not block.
  */
 @property (copy) CBPBackgroundTaskStartBlock startBlock;
 
 /**
- *  A block to end your task. It will be performed on a dedicated background thread.
+ *  A block to end your task and prepare for reuse. It will be performed on a dedicated background thread. This block must not block.
  */
 @property (copy) CBPBackgroundTaskStopBlock stopBlock;
 
@@ -92,8 +92,21 @@ typedef void (^CBPBackgroundTaskStopBlock)(id object);
 
 @optional
 
+/**
+ *  Start your task here. This method will be performed from the background thread. This method must not block.
+ *
+ *  @param task The task that is starting
+ *
+ *  @return When applicable, you may choose to return the object that you started. For example, an NSStream subclass. The background task will own the object until the task is stopped. If this is not applicable or desired, just return nil.
+ */
 - (id)startBackgroundTask:(CBPBackgroundTask *)task;
 
+/**
+ *  End your task here and prepare for reuse.
+ *
+ *  @param task   The task that is ending
+ *  @param object The object returned by the start implementation, or nil
+ */
 - (void)stopBackgroundTask:(CBPBackgroundTask *)task withObject:(id)object;
 
 @end

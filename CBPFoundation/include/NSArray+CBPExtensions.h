@@ -23,7 +23,6 @@
  */
 
 #import <CBPFoundation/CBPFoundation.h>
-#import "CBPCollectionTypes.h"
 
 @interface NSArray (CBPExtensions)
 

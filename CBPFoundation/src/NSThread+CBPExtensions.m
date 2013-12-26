@@ -24,8 +24,8 @@
 
 #import "NSThread+CBPExtensions.h"
 
-static NSString *const CBPThreadKeyLock = @"lock";
-static NSString *const CBPThreadKeyThread = @"thread";
+#define CBPThreadKeyLock   @"lock"
+#define CBPThreadKeyThread @"thread"
 
 @implementation NSThread (CBPExtensions)
 
@@ -79,7 +79,9 @@ static NSString *const CBPThreadKeyThread = @"thread";
 - (void)cbp_stop
 {
     [self cbp_performBlockSync:^{
+        
         [self cancel];
+        
     }];
 }
 

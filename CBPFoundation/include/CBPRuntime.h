@@ -24,13 +24,4 @@
 
 #import <CBPFoundation/CBPFoundation.h>
 
-/**
- *  If you are using the return value of -performSelector: this method helps suppress some ARC related warnings.
- *
- *  @param returnType The return type of the message specified by the given selector
- *  @param target     The target receiver
- *  @param selector   The selector to perform
- *
- *  @return The return value of the selector or void
- */
-#define CBPPerformUnknownSelector(returnType, target, selector) ((returnType (*)(id, SEL))[target methodForSelector:selector])(target, selector);
+#define CBPFunctionForSelector(functionName, returnType, target, selector, ...) returnType (*functionName)(##__VA_ARGS__) = (returnType (*)(##__VA_ARGS__))[target methodForSelector:selector]

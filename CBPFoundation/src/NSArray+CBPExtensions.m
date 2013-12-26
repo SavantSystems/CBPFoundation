@@ -44,7 +44,8 @@
 {
     return [self arrayByMappingBlock:^id(id object) {
         
-        return CBPPerformUnknownSelector(id, object, selector);
+        CBPFunctionForSelector(f, id, object, selector,);
+        return f();
         
     }];
 }

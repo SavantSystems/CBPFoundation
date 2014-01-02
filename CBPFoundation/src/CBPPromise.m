@@ -22,20 +22,17 @@
  THE SOFTWARE.
  */
 
+#import "CBPPromise.h"
+
 typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
 {
     CBPPromiseLockStateWaiting,
     CBPPromiseLockStateDelivered,
 };
 
-#import "CBPPromise.h"
-
 @interface CBPPromise ()
-
-@property NSConditionLock *lock;
-
-@property id promiseValue;
-
+@property (nonatomic) NSConditionLock *lock;
+@property (nonatomic) id value;
 @end
 
 @implementation CBPPromise
@@ -52,7 +49,7 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
     return self;
 }
 
-- (BOOL)resolved
+- (BOOL)isRealized
 {
     return [self.lock condition] == CBPPromiseLockStateDelivered;
 }
@@ -63,34 +60,38 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
     
     if ([self.lock tryLockWhenCondition:CBPPromiseLockStateWaiting])
     {
-        self.promiseValue = value;
-        [self.lock unlockWithCondition:CBPPromiseLockStateDelivered];
         success = YES;
+        self.value = value;
         
-        if (self.deliveryBlock)
+        @synchronized (self)
         {
-            if (self.deliveryQueue)
+            if (self.deliveryBlock)
             {
-                dispatch_async(self.deliveryQueue, ^{
-                    
+                if (self.deliveryQueue)
+                {
+                    dispatch_async(self.deliveryQueue, ^{
+                        
+                        self.deliveryBlock(value);
+                        
+                    });
+                }
+                else
+                {
                     self.deliveryBlock(value);
-                    
-                });
+                }
+                
+                self.deliveryBlock = nil;
+                self.deliveryQueue = nil;
             }
-            else
-            {
-                self.deliveryBlock(value);
-            }
-            
-            self.deliveryBlock = nil;
-            self.deliveryQueue = nil;
         }
+        
+        [self.lock unlockWithCondition:CBPPromiseLockStateDelivered];
     }
     
     return success;
 }
 
-- (id)value
+- (id)deref
 {
     if ([self.lock condition] != CBPPromiseLockStateDelivered)
     {
@@ -98,7 +99,48 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
         [self.lock unlock];
     }
     
-    return self.promiseValue;
+    return self.value;
+}
+
+- (id)derefWithTimeoutInterval:(NSTimeInterval)timeoutInterval timeoutValue:(id)timeoutValue
+{
+    BOOL timedout = NO;
+    
+    if ([self.lock condition] != CBPPromiseLockStateDelivered)
+    {
+        if ([self.lock lockWhenCondition:CBPPromiseLockStateDelivered beforeDate:[NSDate dateWithTimeIntervalSinceNow:timeoutInterval]])
+        {
+            [self.lock unlock];
+        }
+        else
+        {
+            timedout = YES;
+        }
+    }
+    
+    return timedout ? timeoutValue : self.value;
+}
+
+- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(void (^)(id value))successBlock timeoutBlock:(void (^)(void))timeoutBlock
+{
+    static NSString *const DefaultTimeoutValue = @"DefaultTimeoutValue";
+    
+    id value = [self derefWithTimeoutInterval:timeInterval timeoutValue:DefaultTimeoutValue];
+    
+    if (value == DefaultTimeoutValue)
+    {
+        if (timeoutBlock)
+        {
+            timeoutBlock();
+        }
+    }
+    else
+    {
+        if (successBlock)
+        {
+            successBlock(value);
+        }
+    }
 }
 
 @end

@@ -24,10 +24,12 @@
 
 @protocol CBPPromise <NSObject>
 
-- (BOOL)resolved;
+- (BOOL)isRealized;
 
 - (BOOL)deliver:(id)value;
 
-- (id)value;
+- (id)deref;
+
+- (id)derefWithTimeoutInterval:(NSTimeInterval)timeoutInterval timeoutValue:(id)timeoutValue;
 
 @end

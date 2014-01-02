@@ -214,15 +214,15 @@
 {
     CBPPromise *promise = [[CBPPromise alloc] init];
     
-    XCTAssert(![promise resolved], @"Promise should not be considered resolved");
+    XCTAssert(![promise isRealized], @"Promise should not be considered resolved");
     
     XCTAssert([promise deliver:@"hello"], @"Promise should have been able to be delivered");
     
-    XCTAssert([promise resolved], @"Promise should be considered resolved");
+    XCTAssert([promise isRealized], @"Promise should be considered resolved");
     
     XCTAssert(![promise deliver:@"hello 1"], @"Promise is already delivered and should not have been able to be delivered again");
     
-    XCTAssert([[promise value] isEqualToString:@"hello"], );
+    XCTAssert([[promise deref] isEqualToString:@"hello"], );
 }
 
 - (void)testPromiseBackgroundResolve
@@ -238,7 +238,7 @@
         
     });
     
-    XCTAssert([[promise value] isEqualToString:promiseValue], @"Promise value should have been equal to: 'hello");
+    XCTAssert([[promise deref] isEqualToString:promiseValue], @"Promise value should have been equal to: 'hello");
 }
 
 - (void)testPromiseBlockResolve
@@ -254,6 +254,24 @@
     };
     
     [promise deliver:promiseValue];
+}
+
+- (void)testPromiseBackgroundResolveTimeout
+{
+    NSString *promiseValue = @"hello";
+    
+    CBPPromise *promise = [[CBPPromise alloc] init];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        sleep(2);
+        [promise deliver:promiseValue];
+        
+    });
+    
+    XCTAssert([[promise derefWithTimeoutInterval:0.2 timeoutValue:@""] isEqualToString:@""], @"Promise should have timedout and equaled been equal to the empty string");
+    
+    XCTAssert([[promise derefWithTimeoutInterval:5.0 timeoutValue:@""] isEqualToString:promiseValue], @"Promise shouldn't have timedout and show have been equal to: '%@'", promiseValue);
 }
 
 @end

@@ -38,4 +38,6 @@ typedef void (^CBPPromiseDeliveryBlock)(id value);
  */
 @property dispatch_queue_t deliveryQueue;
 
+- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(void (^)(id value))successBlock timeoutBlock:(void (^)(void))timeoutBlock;
+
 @end

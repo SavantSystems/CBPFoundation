@@ -22,7 +22,7 @@
  THE SOFTWARE.
  */
 
-#import <CBPFoundation/CBPFoundation.h>
+#import "CBPFoundation.h"
 
 @interface NSMutableArray (CBPExtensions)
 

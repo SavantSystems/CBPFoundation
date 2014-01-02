@@ -1,0 +1,104 @@
+/*
+ The MIT License (MIT)
+ 
+ Copyright (c) 2014 Cameron Pulsford
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ */
+
+typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
+{
+    CBPPromiseLockStateWaiting,
+    CBPPromiseLockStateDelivered,
+};
+
+#import "CBPPromise.h"
+
+@interface CBPPromise ()
+
+@property NSConditionLock *lock;
+
+@property id promiseValue;
+
+@end
+
+@implementation CBPPromise
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        self.lock = [[NSConditionLock alloc] initWithCondition:CBPPromiseLockStateWaiting];
+    }
+    
+    return self;
+}
+
+- (BOOL)resolved
+{
+    return [self.lock condition] == CBPPromiseLockStateDelivered;
+}
+
+- (BOOL)deliver:(id)value
+{
+    BOOL success = NO;
+    
+    if ([self.lock tryLockWhenCondition:CBPPromiseLockStateWaiting])
+    {
+        self.promiseValue = value;
+        [self.lock unlockWithCondition:CBPPromiseLockStateDelivered];
+        success = YES;
+        
+        if (self.deliveryBlock)
+        {
+            if (self.deliveryQueue)
+            {
+                dispatch_async(self.deliveryQueue, ^{
+                    
+                    self.deliveryBlock(value);
+                    
+                });
+            }
+            else
+            {
+                self.deliveryBlock(value);
+            }
+            
+            self.deliveryBlock = nil;
+            self.deliveryQueue = nil;
+        }
+    }
+    
+    return success;
+}
+
+- (id)value
+{
+    if ([self.lock condition] != CBPPromiseLockStateDelivered)
+    {
+        [self.lock lockWhenCondition:CBPPromiseLockStateDelivered];
+        [self.lock unlock];
+    }
+    
+    return self.promiseValue;
+}
+
+@end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E549C3918752D4E0092A851 /* CBPPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E549C3818752D4E0092A851 /* CBPPromise.m */; };
+		1E549C3A18752D4E0092A851 /* CBPPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E549C3818752D4E0092A851 /* CBPPromise.m */; };
 		3EFF9157184A2F550082E11C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFF9156184A2F550082E11C /* Foundation.framework */; };
 		3EFF915C184A2F550082E11C /* CBPFoundation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3EFF915B184A2F550082E11C /* CBPFoundation.h */; };
 		3EFF9165184A2F550082E11C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFF9164184A2F550082E11C /* XCTest.framework */; };
@@ -49,6 +51,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1E549C3618752D370092A851 /* CBPThreadingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPThreadingPrimitives.h; path = include/CBPThreadingPrimitives.h; sourceTree = "<group>"; };
+		1E549C3718752D450092A851 /* CBPPromise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPPromise.h; path = include/CBPPromise.h; sourceTree = "<group>"; };
+		1E549C3818752D4E0092A851 /* CBPPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CBPPromise.m; path = src/CBPPromise.m; sourceTree = "<group>"; };
 		3EB13C42184AB0A30089FFB2 /* CBPFoundation-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBPFoundation-Prefix.pch"; sourceTree = "<group>"; };
 		3EB13C43184AB1240089FFB2 /* CBPCollectionTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPCollectionTypes.h; path = include/CBPCollectionTypes.h; sourceTree = "<group>"; };
 		3EFF9153184A2F550082E11C /* libCBPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCBPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +173,9 @@
 				3EFF917D184A2F760082E11C /* CBPBackgroundTask.m */,
 				3EFF9182184A2F760082E11C /* NSThread+CBPExtensions.h */,
 				3EFF9183184A2F760082E11C /* NSThread+CBPExtensions.m */,
+				1E549C3618752D370092A851 /* CBPThreadingPrimitives.h */,
+				1E549C3718752D450092A851 /* CBPPromise.h */,
+				1E549C3818752D4E0092A851 /* CBPPromise.m */,
 			);
 			name = "Thread Stuff";
 			sourceTree = "<group>";
@@ -277,6 +285,7 @@
 				3EFF9186184A2F760082E11C /* NSArray+CBPExtensions.m in Sources */,
 				3EFF9184184A2F760082E11C /* CBPBackgroundTask.m in Sources */,
 				3EFF9188184A2F760082E11C /* NSMutableArray+CBPExtensions.m in Sources */,
+				1E549C3918752D4E0092A851 /* CBPPromise.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EFF9185184A2F760082E11C /* CBPBackgroundTask.m in Sources */,
+				1E549C3A18752D4E0092A851 /* CBPPromise.m in Sources */,
 				3EFF9187184A2F760082E11C /* NSArray+CBPExtensions.m in Sources */,
 				3EFF9173184A2F550082E11C /* CBPFoundationTests.m in Sources */,
 				3EFF918B184A2F760082E11C /* NSThread+CBPExtensions.m in Sources */,

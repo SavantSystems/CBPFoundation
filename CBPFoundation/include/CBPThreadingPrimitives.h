@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
  
- Copyright (c) 2013 Cameron Pulsford
+ Copyright (c) 2014 Cameron Pulsford
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -22,34 +22,12 @@
  THE SOFTWARE.
  */
 
-#import "CBPFoundation.h"
+@protocol CBPPromise <NSObject>
 
-@interface NSThread (CBPExtensions)
+- (BOOL)resolved;
 
-/**
- *  Creates and returns a new thread that is ready for events to be scheduled on it. To correctly stop it, call -cbp_stop.
- *
- *  @return a newly created thread
- */
-+ (NSThread *)cbp_runningThread;
+- (BOOL)deliver:(id)value;
 
-/**
- *  Cleanly stops a thread returned by cbp_runningThread.
- */
-- (void)cbp_stop;
-
-/**
- *  Performs a block synchronously on the receiving thread.
- *
- *  @param block the block to perform
- */
-- (void)cbp_performBlockSync:(dispatch_block_t)block;
-
-/**
- *  Performs a block asynchronously on the receiving thread. If the target thread and the current thread are the same, the block will be performed on the next iteration of the runloop.
- *
- *  @param block the block to perform
- */
-- (void)cbp_performBlockAsync:(dispatch_block_t)block;
+- (id)value;
 
 @end

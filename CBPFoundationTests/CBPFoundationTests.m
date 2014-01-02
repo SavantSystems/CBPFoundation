@@ -208,4 +208,52 @@
     XCTAssert(!someVariable, @"Task did not finish");
 }
 
+#pragma mark - Promise tests
+
+- (void)testPromiseBasics
+{
+    CBPPromise *promise = [[CBPPromise alloc] init];
+    
+    XCTAssert(![promise resolved], @"Promise should not be considered resolved");
+    
+    XCTAssert([promise deliver:@"hello"], @"Promise should have been able to be delivered");
+    
+    XCTAssert([promise resolved], @"Promise should be considered resolved");
+    
+    XCTAssert(![promise deliver:@"hello 1"], @"Promise is already delivered and should not have been able to be delivered again");
+    
+    XCTAssert([[promise value] isEqualToString:@"hello"], );
+}
+
+- (void)testPromiseBackgroundResolve
+{
+    NSString *promiseValue = @"hello";
+    
+    CBPPromise *promise = [[CBPPromise alloc] init];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        sleep(2);
+        [promise deliver:promiseValue];
+        
+    });
+    
+    XCTAssert([[promise value] isEqualToString:promiseValue], @"Promise value should have been equal to: 'hello");
+}
+
+- (void)testPromiseBlockResolve
+{
+    NSString *promiseValue = @"hello";
+    
+    CBPPromise *promise = [[CBPPromise alloc] init];
+    
+    promise.deliveryBlock = ^(id value) {
+        
+        XCTAssert([value isEqualToString:promiseValue], @"Promise value should have been equal to: 'hello");
+        
+    };
+    
+    [promise deliver:promiseValue];
+}
+
 @end

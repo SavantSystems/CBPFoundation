@@ -1,7 +1,7 @@
 /*
  The MIT License (MIT)
  
- Copyright (c) 2013 Cameron Pulsford
+ Copyright (c) 2014 Cameron Pulsford
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -22,34 +22,20 @@
  THE SOFTWARE.
  */
 
-#import "CBPFoundation.h"
+#import "CBPThreadingPrimitives.h"
 
-@interface NSThread (CBPExtensions)
+typedef void (^CBPPromiseDeliveryBlock)(id value);
 
-/**
- *  Creates and returns a new thread that is ready for events to be scheduled on it. To correctly stop it, call -cbp_stop.
- *
- *  @return a newly created thread
- */
-+ (NSThread *)cbp_runningThread;
+@interface CBPPromise : NSObject <CBPPromise>
 
 /**
- *  Cleanly stops a thread returned by cbp_runningThread.
+ *  This block will be called when a value is delivered to the promise.
  */
-- (void)cbp_stop;
+@property (copy) CBPPromiseDeliveryBlock deliveryBlock;
 
 /**
- *  Performs a block synchronously on the receiving thread.
- *
- *  @param block the block to perform
+ *  The queue with which to perform the deliveryBlock. If no queue is specified, the block will be performed on the thread the value was delivered from.
  */
-- (void)cbp_performBlockSync:(dispatch_block_t)block;
-
-/**
- *  Performs a block asynchronously on the receiving thread. If the target thread and the current thread are the same, the block will be performed on the next iteration of the runloop.
- *
- *  @param block the block to perform
- */
-- (void)cbp_performBlockAsync:(dispatch_block_t)block;
+@property dispatch_queue_t deliveryQueue;
 
 @end

@@ -22,7 +22,7 @@
  THE SOFTWARE.
  */
 
-#import <CBPFoundation/CBPFoundation.h>
+#import "CBPFoundation.h"
 
 /**
  *  This class controls the stopping and starting of a background task. It is similar to an NSOperation, but more appropriate for a long running task that can stopped and restarted.

@@ -28,4 +28,5 @@
 #import "NSMutableArray+CBPExtensions.h"
 #import "NSThread+CBPExtensions.h"
 #import "CBPBackgroundTask.h"
+#import "CBPThreadingPrimitives.h"
 #import "CBPPromise.h"

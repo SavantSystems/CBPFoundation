@@ -22,44 +22,32 @@
  THE SOFTWARE.
  */
 
-#pragma mark - CBPDelay
+#import "CBPFoundation.h"
 
-@protocol CBPDelay <NSObject>
+extern id const CBPFutureCancelledValue;
 
-- (BOOL)isRealized;
+typedef BOOL (^CBPFutureCancelledBlock)(void);
 
-@end
+typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isValid);
 
-#pragma mark - CBPDeref
+@interface CBPFuture : NSObject <CBPFuture>
 
-@protocol CBPDeref <NSObject>
-
-- (id)deref;
-
-@end
-
-#pragma mark - CBPBlockingDeref
-
-@protocol CBPBlockingDeref <NSObject>
-
-- (id)derefWithTimeoutInterval:(NSTimeInterval)timeoutInterval timeoutValue:(id)timeoutValue;
+/**
+ *  Initializes and starts a new future.
+ *
+ *  @param queue     The queue on which to perform the work. If nil, a global concurrent background queue will be used.
+ *  @param workBlock The work block whose value will be computed in the background and cached.
+ *
+ *  @return An initialized future.
+ */
+- (instancetype)initWithQueue:(dispatch_queue_t)queue workBlock:(CBPFutureWorkBlock)workBlock;
 
 @end
 
-#pragma mark - CBPPromise
+#pragma mark - Optional methods for subclassing
 
-@protocol CBPPromise <NSObject, CBPDelay, CBPDeref, CBPBlockingDeref>
+@interface CBPFuture (SubclassableMethods)
 
-- (BOOL)deliver:(id)value;
-
-@end
-
-#pragma mark - CBPFuture
-
-@protocol CBPFuture <NSObject, CBPDelay, CBPDeref, CBPBlockingDeref>
-
-- (BOOL)cancel;
-
-- (BOOL)isCancelled;
+- (id)main;
 
 @end

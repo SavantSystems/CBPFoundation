@@ -30,3 +30,4 @@
 #import "CBPBackgroundTask.h"
 #import "CBPThreadingPrimitives.h"
 #import "CBPPromise.h"
+#import "CBPFuture.h"

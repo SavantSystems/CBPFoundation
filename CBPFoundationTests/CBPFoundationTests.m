@@ -274,4 +274,86 @@
     XCTAssert([[promise derefWithTimeoutInterval:5.0 timeoutValue:@""] isEqualToString:promiseValue], @"Promise shouldn't have timedout and show have been equal to: '%@'", promiseValue);
 }
 
+- (void)testFutureDerefSameThread
+{
+    NSString *value = @"";
+    
+    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCancelledBlock isValid) {
+        
+        sleep(5.0);
+        
+        return value;
+        
+    }];
+    
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        XCTAssert([[future deref] isEqualToString:value], @"Future deref did not work");
+    });
+    
+    XCTAssert([[future deref] isEqualToString:value], @"Future deref did not work");
+}
+
+- (void)testFutureDerefDifferentThread
+{
+    NSString *value = @"";
+    
+    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCancelledBlock isValid) {
+        
+        sleep(5.0);
+        
+        return value;
+        
+    }];
+    
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        XCTAssert([[future deref] isEqualToString:value], @"Future deref did not work");
+    });
+}
+
+- (void)testFutureDerefTimeout
+{
+    NSString *value = @"";
+    
+    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCancelledBlock isValid) {
+        
+        sleep(5.0);
+        
+        return value;
+        
+    }];
+    
+    XCTAssert([[future derefWithTimeoutInterval:1.0 timeoutValue:@"hello"] isEqualToString:@"hello"], @"Future deref did not work");
+    
+    XCTAssert(![future isRealized], @"Future shouldn't be realized");
+    
+    XCTAssert([[future derefWithTimeoutInterval:10.0 timeoutValue:@"hello"] isEqualToString:value], @"Future deref did not work");
+    
+    XCTAssert([future isRealized], @"Future should be realized");
+}
+
+- (void)testFutureDerefCancel
+{
+    NSString *value = @"";
+    
+    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCancelledBlock isValid) {
+        
+        sleep(5.0);
+        
+        return value;
+        
+    }];
+    
+    sleep(1);
+    
+    XCTAssert(![future isRealized], @"Should not have been realized");
+    
+    XCTAssert([future cancel], @"Should have been able to cancel future");
+    
+    XCTAssert([future isRealized], @"Should have been realized");
+    
+    XCTAssert(![future cancel], @"Should not have been able to cancel future");
+    
+    XCTAssert([[future derefWithTimeoutInterval:10.0 timeoutValue:@"hello"] isEqualToString:CBPFutureCancelledValue], @"Future deref did not work");
+}
+
 @end

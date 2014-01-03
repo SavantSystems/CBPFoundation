@@ -34,7 +34,7 @@ typedef void (^CBPPromiseDeliveryBlock)(id value);
 @property (copy) CBPPromiseDeliveryBlock deliveryBlock;
 
 /**
- *  The queue with which to perform the deliveryBlock. If no queue is specified, the block will be performed on the thread the value was delivered from.
+ *  The queue with which to perform the deliveryBlock. If no queue is specified, the block will be performed on the main queue.
  */
 @property dispatch_queue_t deliveryQueue;
 

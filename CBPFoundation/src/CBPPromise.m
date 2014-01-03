@@ -67,18 +67,13 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
         {
             if (self.deliveryBlock)
             {
-                if (self.deliveryQueue)
-                {
-                    dispatch_async(self.deliveryQueue, ^{
-                        
-                        self.deliveryBlock(value);
-                        
-                    });
-                }
-                else
-                {
+                dispatch_queue_t dispatchQueue = self.deliveryQueue ? self.deliveryQueue : dispatch_get_main_queue();
+                
+                dispatch_async(dispatchQueue, ^{
+                    
                     self.deliveryBlock(value);
-                }
+                    
+                });
                 
                 self.deliveryBlock = nil;
                 self.deliveryQueue = nil;

@@ -38,6 +38,13 @@ typedef void (^CBPDerefRealizationBlock)(id value);
  */
 @property dispatch_queue_t realizationQueue;
 
-- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(void (^)(id value))successBlock timeoutBlock:(void (^)(void))timeoutBlock;
+/**
+ *  If a value is successfully deref'd within the timeout, the success block will be performed with the value, otherwise the timeout block will be called.
+ *
+ *  @param timeInterval The amount of time to wait for a value to be made available (in seconds).
+ *  @param successBlock Called with the deref'd or cached value.
+ *  @param timeoutBlock Called when a value was not made available within the timeout.
+ */
+- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(CBPDerefRealizationBlock)successBlock timeoutBlock:(dispatch_block_t)timeoutBlock;
 
 @end

@@ -47,6 +47,8 @@ typedef BOOL (^CBPFutureCancelledBlock)(void);
  */
 typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isCancelled);
 
+#pragma mark -
+
 @interface CBPFuture : CBPDeref <CBPFuture>
 
 /**

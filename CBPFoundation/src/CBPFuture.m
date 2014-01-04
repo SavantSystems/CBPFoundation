@@ -23,20 +23,13 @@
  */
 
 #import "CBPFuture.h"
+#import "CBPDerefSubclass.h"
 
 id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
-
-typedef NS_ENUM(NSInteger, CBPFutureLockState_t)
-{
-    CBPFutureLockStateWaiting,
-    CBPFutureLockStateRealized,
-};
 
 @interface CBPFuture ()
 @property dispatch_queue_t workQueue;
 @property (copy) CBPFutureWorkBlock workBlock;
-@property (nonatomic) NSConditionLock *lock;
-@property (nonatomic) id value;
 @property BOOL isRealized;
 @property BOOL isCancelled;
 @end
@@ -57,7 +50,6 @@ typedef NS_ENUM(NSInteger, CBPFutureLockState_t)
         {
             self.workQueue = queue ? queue : dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             self.workBlock = workBlock;
-            self.lock = [[NSConditionLock alloc] initWithCondition:CBPFutureLockStateWaiting];
             
             [self start];
         }
@@ -66,56 +58,16 @@ typedef NS_ENUM(NSInteger, CBPFutureLockState_t)
     return self;
 }
 
-#pragma mark - CBPDeref
-
-- (id)deref
-{
-    if ([self.lock condition] != CBPFutureLockStateRealized)
-    {
-        [self.lock lockWhenCondition:CBPFutureLockStateRealized];
-        [self.lock unlock];
-    }
-    
-    return self.value;
-}
-
-#pragma mark - CBPBlockingDeref
-
-- (id)derefWithTimeoutInterval:(NSTimeInterval)timeoutInterval timeoutValue:(id)timeoutValue
-{
-    BOOL timedout = NO;
-    
-    if ([self.lock condition] != CBPFutureLockStateRealized)
-    {
-        if ([self.lock lockWhenCondition:CBPFutureLockStateRealized beforeDate:[NSDate dateWithTimeIntervalSinceNow:timeoutInterval]])
-        {
-            [self.lock unlock];
-        }
-        else
-        {
-            timedout = YES;
-        }
-    }
-    
-    return timedout ? timeoutValue : self.value;
-}
-
 #pragma mark - CBPFuture methods
 
 - (BOOL)cancel
 {
-    BOOL success = NO;
-    
-    if ([self.lock tryLockWhenCondition:CBPFutureLockStateWaiting])
-    {
-        success = YES;
+    return [self assignValue:CBPFutureCancelledValue criticalBlock:^{
+        
         self.isCancelled = YES;
         self.isRealized = YES;
-        self.value = CBPFutureCancelledValue;
-        [self.lock unlockWithCondition:CBPFutureLockStateRealized];
-    }
-    
-    return success;
+        
+    }];
 }
 
 #pragma mark - Internal
@@ -141,12 +93,11 @@ typedef NS_ENUM(NSInteger, CBPFutureLockState_t)
                 });
             }
             
-            if ([self.lock tryLockWhenCondition:CBPFutureLockStateWaiting])
-            {
+            [self assignValue:value criticalBlock:^ {
+                
                 self.isRealized = YES;
-                self.value = value;
-                [self.lock unlockWithCondition:CBPFutureLockStateRealized];
-            }
+                
+            }];
         }
     };
     

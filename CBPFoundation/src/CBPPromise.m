@@ -23,46 +23,21 @@
  */
 
 #import "CBPPromise.h"
-
-typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
-{
-    CBPPromiseLockStateWaiting,
-    CBPPromiseLockStateDelivered,
-};
-
-@interface CBPPromise ()
-@property (nonatomic) NSConditionLock *lock;
-@property (nonatomic) id value;
-@end
+#import "CBPDerefSubclass.h"
 
 @implementation CBPPromise
 
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        self.lock = [[NSConditionLock alloc] initWithCondition:CBPPromiseLockStateWaiting];
-    }
-    
-    return self;
-}
-
 - (BOOL)isRealized
 {
-    return [self.lock condition] == CBPPromiseLockStateDelivered;
+    return [self valueHasBeenAssigned];
 }
 
 - (BOOL)deliver:(id)value
 {
-    BOOL success = NO;
+    BOOL success = [self assignValue:value criticalBlock:nil];
     
-    if ([self.lock tryLockWhenCondition:CBPPromiseLockStateWaiting])
+    if (success)
     {
-        success = YES;
-        self.value = value;
-        
         @synchronized (self)
         {
             if (self.deliveryBlock)
@@ -79,41 +54,9 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
                 self.deliveryQueue = nil;
             }
         }
-        
-        [self.lock unlockWithCondition:CBPPromiseLockStateDelivered];
     }
     
     return success;
-}
-
-- (id)deref
-{
-    if ([self.lock condition] != CBPPromiseLockStateDelivered)
-    {
-        [self.lock lockWhenCondition:CBPPromiseLockStateDelivered];
-        [self.lock unlock];
-    }
-    
-    return self.value;
-}
-
-- (id)derefWithTimeoutInterval:(NSTimeInterval)timeoutInterval timeoutValue:(id)timeoutValue
-{
-    BOOL timedout = NO;
-    
-    if ([self.lock condition] != CBPPromiseLockStateDelivered)
-    {
-        if ([self.lock lockWhenCondition:CBPPromiseLockStateDelivered beforeDate:[NSDate dateWithTimeIntervalSinceNow:timeoutInterval]])
-        {
-            [self.lock unlock];
-        }
-        else
-        {
-            timedout = YES;
-        }
-    }
-    
-    return timedout ? timeoutValue : self.value;
 }
 
 - (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(void (^)(id value))successBlock timeoutBlock:(void (^)(void))timeoutBlock

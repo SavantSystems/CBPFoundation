@@ -22,38 +22,8 @@
  THE SOFTWARE.
  */
 
-#pragma mark - CBPDelay
+#import "CBPThreadingPrimitives.h"
 
-@protocol CBPDelay <NSObject>
-
-- (BOOL)isRealized;
-
-@end
-
-#pragma mark - CBPDeref
-
-@protocol CBPDeref <NSObject>
-
-- (id)deref;
-
-- (id)derefWithTimeoutInterval:(NSTimeInterval)timeoutInterval timeoutValue:(id)timeoutValue;
-
-@end
-
-#pragma mark - CBPPromise
-
-@protocol CBPPromise <NSObject, CBPDelay, CBPDeref>
-
-- (BOOL)deliver:(id)value;
-
-@end
-
-#pragma mark - CBPFuture
-
-@protocol CBPFuture <NSObject, CBPDelay, CBPDeref>
-
-- (BOOL)cancel;
-
-- (BOOL)isCancelled;
+@interface CBPDeref : NSObject <CBPDeref>
 
 @end

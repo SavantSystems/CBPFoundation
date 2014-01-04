@@ -23,10 +23,11 @@
  */
 
 #import "CBPFoundation.h"
+#import "CBPDeref.h"
 
 typedef void (^CBPPromiseDeliveryBlock)(id value);
 
-@interface CBPPromise : NSObject <CBPPromise>
+@interface CBPPromise : CBPDeref <CBPPromise>
 
 /**
  *  This block will be called when a value is delivered to the promise.

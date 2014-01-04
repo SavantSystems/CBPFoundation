@@ -23,6 +23,7 @@
  */
 
 #import "CBPFoundation.h"
+#import "CBPDeref.h"
 
 extern id const CBPFutureCancelledValue;
 
@@ -30,7 +31,7 @@ typedef BOOL (^CBPFutureCancelledBlock)(void);
 
 typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isValid);
 
-@interface CBPFuture : NSObject <CBPFuture>
+@interface CBPFuture : CBPDeref <CBPFuture>
 
 /**
  *  Initializes and starts a new future.

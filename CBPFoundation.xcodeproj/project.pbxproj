@@ -11,6 +11,7 @@
 		1E549C3A18752D4E0092A851 /* CBPPromise.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E549C3818752D4E0092A851 /* CBPPromise.m */; };
 		1EA5A73D1876788F0083B20D /* CBPFuture.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EA5A73C1876788F0083B20D /* CBPFuture.m */; };
 		1EA5A73E1876788F0083B20D /* CBPFuture.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EA5A73C1876788F0083B20D /* CBPFuture.m */; };
+		1ED1107618778E4500A645AA /* CBPDeref.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED1107518778E4500A645AA /* CBPDeref.m */; };
 		3EFF9157184A2F550082E11C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFF9156184A2F550082E11C /* Foundation.framework */; };
 		3EFF915C184A2F550082E11C /* CBPFoundation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3EFF915B184A2F550082E11C /* CBPFoundation.h */; };
 		3EFF9165184A2F550082E11C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFF9164184A2F550082E11C /* XCTest.framework */; };
@@ -58,6 +59,9 @@
 		1E549C3818752D4E0092A851 /* CBPPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CBPPromise.m; path = src/CBPPromise.m; sourceTree = "<group>"; };
 		1EA5A73C1876788F0083B20D /* CBPFuture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CBPFuture.m; path = src/CBPFuture.m; sourceTree = "<group>"; };
 		1EA5A73F187678B60083B20D /* CBPFuture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPFuture.h; path = include/CBPFuture.h; sourceTree = "<group>"; };
+		1ED1107518778E4500A645AA /* CBPDeref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CBPDeref.m; path = src/CBPDeref.m; sourceTree = "<group>"; };
+		1ED1107718778E6000A645AA /* CBPDeref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPDeref.h; path = include/CBPDeref.h; sourceTree = "<group>"; };
+		1ED1107818778F8400A645AA /* CBPDerefSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPDerefSubclass.h; sourceTree = "<group>"; };
 		3EB13C42184AB0A30089FFB2 /* CBPFoundation-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBPFoundation-Prefix.pch"; sourceTree = "<group>"; };
 		3EB13C43184AB1240089FFB2 /* CBPCollectionTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPCollectionTypes.h; path = include/CBPCollectionTypes.h; sourceTree = "<group>"; };
 		3EFF9153184A2F550082E11C /* libCBPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCBPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +182,9 @@
 				3EFF9182184A2F760082E11C /* NSThread+CBPExtensions.h */,
 				3EFF9183184A2F760082E11C /* NSThread+CBPExtensions.m */,
 				1E549C3618752D370092A851 /* CBPThreadingPrimitives.h */,
+				1ED1107718778E6000A645AA /* CBPDeref.h */,
+				1ED1107518778E4500A645AA /* CBPDeref.m */,
+				1ED1107818778F8400A645AA /* CBPDerefSubclass.h */,
 				1E549C3718752D450092A851 /* CBPPromise.h */,
 				1E549C3818752D4E0092A851 /* CBPPromise.m */,
 				1EA5A73F187678B60083B20D /* CBPFuture.h */,
@@ -312,6 +319,7 @@
 				3EFF9188184A2F760082E11C /* NSMutableArray+CBPExtensions.m in Sources */,
 				1EA5A73D1876788F0083B20D /* CBPFuture.m in Sources */,
 				1E549C3918752D4E0092A851 /* CBPPromise.m in Sources */,
+				1ED1107618778E4500A645AA /* CBPDeref.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

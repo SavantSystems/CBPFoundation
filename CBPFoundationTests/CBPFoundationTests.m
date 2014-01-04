@@ -247,7 +247,7 @@
     
     CBPPromise *promise = [[CBPPromise alloc] init];
     
-    promise.deliveryBlock = ^(id value) {
+    promise.realizationBlock = ^(id value) {
         
         XCTAssert([value isEqualToString:promiseValue], @"Promise value should have been equal to: 'hello");
         

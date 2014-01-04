@@ -34,29 +34,7 @@
 
 - (BOOL)deliver:(id)value
 {
-    BOOL success = [self assignValue:value criticalBlock:nil];
-    
-    if (success)
-    {
-        @synchronized (self)
-        {
-            if (self.deliveryBlock)
-            {
-                dispatch_queue_t dispatchQueue = self.deliveryQueue ? self.deliveryQueue : dispatch_get_main_queue();
-                
-                dispatch_async(dispatchQueue, ^{
-                    
-                    self.deliveryBlock(value);
-                    
-                });
-                
-                self.deliveryBlock = nil;
-                self.deliveryQueue = nil;
-            }
-        }
-    }
-    
-    return success;
+    return [self assignValue:value isValid:YES criticalBlock:nil];
 }
 
 @end

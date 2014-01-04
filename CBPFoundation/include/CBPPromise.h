@@ -25,18 +25,6 @@
 #import "CBPFoundation.h"
 #import "CBPDeref.h"
 
-typedef void (^CBPPromiseDeliveryBlock)(id value);
-
 @interface CBPPromise : CBPDeref <CBPPromise>
-
-/**
- *  This block will be called when a value is delivered to the promise.
- */
-@property (copy) CBPPromiseDeliveryBlock deliveryBlock;
-
-/**
- *  The queue on which to perform the deliveryBlock. If no queue is specified, the main queue will be used.
- */
-@property dispatch_queue_t deliveryQueue;
 
 @end

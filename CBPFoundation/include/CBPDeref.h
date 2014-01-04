@@ -24,7 +24,19 @@
 
 #import "CBPThreadingPrimitives.h"
 
+typedef void (^CBPDerefRealizationBlock)(id value);
+
 @interface CBPDeref : NSObject <CBPDeref>
+
+/**
+ *  This block will be called when a value has been realized.
+ */
+@property (copy) CBPDerefRealizationBlock realizationBlock;
+
+/**
+ *  The queue on which to perform the realizationBlock. If no queue is specified, the main queue will be used.
+ */
+@property dispatch_queue_t realizationQueue;
 
 - (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(void (^)(id value))successBlock timeoutBlock:(void (^)(void))timeoutBlock;
 

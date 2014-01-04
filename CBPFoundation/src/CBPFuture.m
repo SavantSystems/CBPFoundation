@@ -49,7 +49,11 @@ id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
         if (self)
         {
             self.workQueue = queue ? queue : dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-            self.workBlock = workBlock;
+            
+            if (![self respondsToSelector:@selector(main)])
+            {
+                self.workBlock = workBlock;
+            }
             
             [self start];
         }

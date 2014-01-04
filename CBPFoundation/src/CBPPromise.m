@@ -59,26 +59,4 @@
     return success;
 }
 
-- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(void (^)(id value))successBlock timeoutBlock:(void (^)(void))timeoutBlock
-{
-    static NSString *const DefaultTimeoutValue = @"DefaultTimeoutValue";
-    
-    id value = [self derefWithTimeoutInterval:timeInterval timeoutValue:DefaultTimeoutValue];
-    
-    if (value == DefaultTimeoutValue)
-    {
-        if (timeoutBlock)
-        {
-            timeoutBlock();
-        }
-    }
-    else
-    {
-        if (successBlock)
-        {
-            successBlock(value);
-        }
-    }
-}
-
 @end

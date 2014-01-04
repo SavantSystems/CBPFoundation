@@ -26,4 +26,6 @@
 
 @interface CBPDeref : NSObject <CBPDeref>
 
+- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(void (^)(id value))successBlock timeoutBlock:(void (^)(void))timeoutBlock;
+
 @end

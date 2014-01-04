@@ -25,11 +25,27 @@
 #import "CBPFoundation.h"
 #import "CBPDeref.h"
 
+/**
+ *  The value returned by a cancelled future.
+ */
 extern id const CBPFutureCancelledValue;
 
+/**
+ *  Use this block to determine if the future is cancelled or not. Similar to an NSOperation, the value of this block should be checked occasionally in longer running work blocks.
+ *  This block is a convenience to avoid capturing the future in the block and causing a retain cycle.
+ *
+ *  @return YES if the future has been cancelled, otherwise NO.
+ */
 typedef BOOL (^CBPFutureCancelledBlock)(void);
 
-typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isValid);
+/**
+ *  Compute the value to cache. This block will be ignored if -main is overriden.
+ *
+ *  @param isCancelled A convenience block to determine if the future is canclled or not. Its value should be checked occasionally in longer running work blocks.
+ *
+ *  @return The result of the work block which will be cached.
+ */
+typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isCancelled);
 
 @interface CBPFuture : CBPDeref <CBPFuture>
 
@@ -49,6 +65,11 @@ typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isValid);
 
 @interface CBPFuture (SubclassableMethods)
 
+/**
+ *  Compute the value to cache. This method takes precedence over the workBlock.
+ *
+ *  @return The result of the method which will be cached.
+ */
 - (id)main;
 
 @end

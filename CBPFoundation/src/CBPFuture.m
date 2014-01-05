@@ -66,7 +66,7 @@ id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
 
 - (BOOL)cancel
 {
-    return [self assignValue:CBPFutureCancelledValue isValid:NO criticalBlock:^{
+    return [self assignValue:CBPFutureCancelledValue notify:NO criticalBlock:^{
         
         self.isCancelled = YES;
         self.isRealized = YES;
@@ -97,7 +97,7 @@ id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
                 });
             }
             
-            [self assignValue:value isValid:YES criticalBlock:^ {
+            [self assignValue:value notify:YES criticalBlock:^ {
                 
                 self.isRealized = YES;
                 

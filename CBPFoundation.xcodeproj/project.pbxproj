@@ -61,7 +61,7 @@
 		1EA5A73F187678B60083B20D /* CBPFuture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPFuture.h; path = include/CBPFuture.h; sourceTree = "<group>"; };
 		1ED1107518778E4500A645AA /* CBPDeref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CBPDeref.m; path = src/CBPDeref.m; sourceTree = "<group>"; };
 		1ED1107718778E6000A645AA /* CBPDeref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPDeref.h; path = include/CBPDeref.h; sourceTree = "<group>"; };
-		1ED1107818778F8400A645AA /* CBPDerefSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPDerefSubclass.h; sourceTree = "<group>"; };
+		1EF9F32B1879D559006EEC66 /* CBPDerefSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPDerefSubclass.h; path = private/CBPDerefSubclass.h; sourceTree = "<group>"; };
 		3EB13C42184AB0A30089FFB2 /* CBPFoundation-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBPFoundation-Prefix.pch"; sourceTree = "<group>"; };
 		3EB13C43184AB1240089FFB2 /* CBPCollectionTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBPCollectionTypes.h; path = include/CBPCollectionTypes.h; sourceTree = "<group>"; };
 		3EFF9153184A2F550082E11C /* libCBPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCBPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,7 +184,7 @@
 				1E549C3618752D370092A851 /* CBPThreadingPrimitives.h */,
 				1ED1107718778E6000A645AA /* CBPDeref.h */,
 				1ED1107518778E4500A645AA /* CBPDeref.m */,
-				1ED1107818778F8400A645AA /* CBPDerefSubclass.h */,
+				1EF9F32B1879D559006EEC66 /* CBPDerefSubclass.h */,
 				1E549C3718752D450092A851 /* CBPPromise.h */,
 				1E549C3818752D4E0092A851 /* CBPPromise.m */,
 				1EA5A73F187678B60083B20D /* CBPFuture.h */,

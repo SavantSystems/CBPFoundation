@@ -34,7 +34,7 @@
 
 - (BOOL)deliver:(id)value
 {
-    return [self assignValue:value isValid:YES criticalBlock:nil];
+    return [self assignValue:value notify:YES criticalBlock:nil];
 }
 
 @end

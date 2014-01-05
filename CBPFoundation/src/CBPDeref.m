@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
 
 #pragma mark - CBPDerefSubclass methods
 
-- (BOOL)assignValue:(id)value isValid:(BOOL)isValid criticalBlock:(void (^)(void))criticalBlock
+- (BOOL)assignValue:(id)value notify:(BOOL)notify criticalBlock:(dispatch_block_t)criticalBlock
 {
     BOOL success = NO;
     
@@ -92,24 +92,24 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
         
         self.value = value;
         [self.lock unlockWithCondition:CBPDerefLockStateRealized];
-    }
-    
-    if (success && isValid)
-    {
-        @synchronized (self)
+        
+        if (notify)
         {
-            if (self.realizationBlock)
+            @synchronized (self)
             {
-                dispatch_queue_t dispatchQueue = self.realizationQueue ? self.realizationQueue : dispatch_get_main_queue();
-                
-                dispatch_async(dispatchQueue, ^{
+                if (self.realizationBlock)
+                {
+                    dispatch_queue_t dispatchQueue = self.realizationQueue ? self.realizationQueue : dispatch_get_main_queue();
                     
-                    self.realizationBlock(value);
+                    dispatch_async(dispatchQueue, ^{
+                        
+                        self.realizationBlock(value);
+                        
+                    });
                     
-                });
-                
-                self.realizationBlock = nil;
-                self.realizationQueue = nil;
+                    self.realizationBlock = nil;
+                    self.realizationQueue = nil;
+                }
             }
         }
     }

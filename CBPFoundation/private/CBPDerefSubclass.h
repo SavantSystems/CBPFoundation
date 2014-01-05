@@ -26,7 +26,7 @@
 
 @interface CBPDeref ()
 
-- (BOOL)assignValue:(id)value isValid:(BOOL)isValid criticalBlock:(void (^)(void))criticalBlock;
+- (BOOL)assignValue:(id)value notify:(BOOL)notify criticalBlock:(dispatch_block_t)criticalBlock;
 
 - (BOOL)valueHasBeenAssigned;
 

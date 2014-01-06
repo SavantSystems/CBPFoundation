@@ -85,7 +85,6 @@ typedef void (^CBPBackgroundTaskStopBlock)(id object);
  */
 - (void)stop;
 
-
 @end
 
 @protocol CBPBackgroundTaskDelegate <NSObject>

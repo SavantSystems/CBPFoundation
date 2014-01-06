@@ -26,6 +26,7 @@
 
 @implementation NSArray (CBPExtensions)
 
+
 #pragma mark - Mapping
 
 - (NSArray *)arrayByMappingBlock:(CBPArrayMappingBlock)block
@@ -49,6 +50,7 @@
         
     }];
 }
+
 
 #pragma mark - Filtering
 
@@ -84,6 +86,7 @@
     
     return filteredArray;
 }
+
 
 #pragma mark - Creating subarrays
 

@@ -43,6 +43,7 @@
     [super tearDown];
 }
 
+
 #pragma mark - Mapping tests
 
 - (void)testArraySelectorMapping
@@ -73,6 +74,7 @@
     }
 }
 
+
 #pragma mark - Filtering tests
 
 - (void)testImmutableArrayFiltering
@@ -100,6 +102,7 @@
     
     XCTAssert([testArray isEqualToArray:@[@"1"]], @"Filtering did not work!");
 }
+
 
 #pragma mark - Take tests
 
@@ -131,6 +134,7 @@
     XCTAssert([testArray isEqualToArray:[testArray arrayByTakingObjects:100]], @"Taking more objects failed");
 }
 
+
 #pragma mark - Drop tests
 
 - (void)testDropZero
@@ -161,6 +165,7 @@
     XCTAssert([@[] isEqualToArray:[testArray arrayByDroppingObjects:100]], @"Dropping more objects failed");
 }
 
+
 #pragma mark - Thread tests
 
 - (void)testBasicThreadExecution
@@ -177,6 +182,7 @@
     
     XCTAssert(someVariable, @"Thread synchronous execution did not work");
 }
+
 
 #pragma mark - CBPBackgroundTask tests
 
@@ -207,6 +213,7 @@
     
     XCTAssert(!someVariable, @"Task did not finish");
 }
+
 
 #pragma mark - Promise tests
 

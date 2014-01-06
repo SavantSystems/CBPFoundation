@@ -47,6 +47,7 @@ typedef BOOL (^CBPFutureCancelledBlock)(void);
  */
 typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isCancelled);
 
+
 #pragma mark -
 
 @interface CBPFuture : CBPDeref <CBPFuture>
@@ -61,7 +62,17 @@ typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isCancelled);
  */
 - (instancetype)initWithQueue:(dispatch_queue_t)queue workBlock:(CBPFutureWorkBlock)workBlock;
 
+/**
+ *  Initializes and starts a new future.
+ *
+ *  @param queue The queue on which to perform the work. If nil, a global concurrent background queue will be used.
+ *
+ *  @return An initialized future.
+ */
+- (instancetype)initWithQueue:(dispatch_queue_t)queue;
+
 @end
+
 
 #pragma mark - Optional methods for subclassing
 

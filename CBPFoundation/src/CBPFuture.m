@@ -28,10 +28,15 @@
 id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
 
 @interface CBPFuture ()
+
 @property dispatch_queue_t workQueue;
+
 @property (copy) CBPFutureWorkBlock workBlock;
+
 @property BOOL isRealized;
+
 @property BOOL isCancelled;
+
 @end
 
 @implementation CBPFuture
@@ -62,6 +67,12 @@ id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
     return self;
 }
 
+- (instancetype)initWithQueue:(dispatch_queue_t)queue
+{
+    return [self initWithQueue:queue workBlock:nil];
+}
+
+
 #pragma mark - CBPFuture methods
 
 - (BOOL)cancel
@@ -73,6 +84,7 @@ id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
         
     }];
 }
+
 
 #pragma mark - Internal
 

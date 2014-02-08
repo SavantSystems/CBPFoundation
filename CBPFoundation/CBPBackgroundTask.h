@@ -76,6 +76,11 @@ typedef void (^CBPBackgroundTaskStopBlock)(id object);
 @property (readonly) id object;
 
 /**
+ *  YES if the task is running, otherwise NO.
+ */
+@property (atomic, readonly) BOOL isRunning;
+
+/**
  *  Start the background task.
  */
 - (void)start;

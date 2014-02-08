@@ -23,7 +23,7 @@
  */
 
 #import <XCTest/XCTest.h>
-#import <CBPFoundation/CBPFoundation.h>
+#import "CBPFoundation.h"
 
 @interface CBPFoundationTests : XCTestCase
 
@@ -104,68 +104,6 @@
 }
 
 
-#pragma mark - Take tests
-
-- (void)testTakeZero
-{
-    NSArray *testArray = @[@"1", @"2"];
-    
-    XCTAssert([@[] isEqualToArray:[testArray arrayByTakingObjects:0]], @"Taking zero objects failed");
-}
-
-- (void)testTakeSome
-{
-    NSArray *testArray = @[@"1", @"2"];
-    
-    XCTAssert([@[@"1"] isEqualToArray:[testArray arrayByTakingObjects:1]], @"Taking some objects failed");
-}
-
-- (void)testTakeAll
-{
-    NSArray *testArray = @[@"1", @"2"];
-    
-    XCTAssert([testArray isEqualToArray:[testArray arrayByTakingObjects:2]], @"Taking all objects failed");
-}
-
-- (void)testTakeMore
-{
-    NSArray *testArray = @[@"1", @"2"];
-    
-    XCTAssert([testArray isEqualToArray:[testArray arrayByTakingObjects:100]], @"Taking more objects failed");
-}
-
-
-#pragma mark - Drop tests
-
-- (void)testDropZero
-{
-    NSArray *testArray = @[@"1", @"2"];
-    
-    XCTAssert([testArray isEqualToArray:[testArray arrayByDroppingObjects:0]], @"Dropping zero objects failed");
-}
-
-- (void)testDropSome
-{
-    NSArray *testArray = @[@"1", @"2"];
-    
-    XCTAssert([@[@"2"] isEqualToArray:[testArray arrayByDroppingObjects:1]], @"Dropping some objects failed");
-}
-
-- (void)testDropAll
-{
-    NSArray *testArray = @[@"1", @"2"];
-    
-    XCTAssert([@[] isEqualToArray:[testArray arrayByDroppingObjects:2]], @"Dropping all objects failed");
-}
-
-- (void)testDropMore
-{
-    NSArray *testArray = @[@"1", @"2"];
-    
-    XCTAssert([@[] isEqualToArray:[testArray arrayByDroppingObjects:100]], @"Dropping more objects failed");
-}
-
-
 #pragma mark - Thread tests
 
 - (void)testBasicThreadExecution
@@ -221,15 +159,17 @@
 {
     CBPPromise *promise = [[CBPPromise alloc] init];
     
+    NSString *deliveryValue = @"hello";
+    
     XCTAssert(![promise isRealized], @"Promise should not be considered resolved");
     
-    XCTAssert([promise deliver:@"hello"], @"Promise should have been able to be delivered");
+    XCTAssert([promise deliver:deliveryValue], @"Promise should have been able to be delivered");
     
     XCTAssert([promise isRealized], @"Promise should be considered resolved");
     
     XCTAssert(![promise deliver:@"hello 1"], @"Promise is already delivered and should not have been able to be delivered again");
     
-    XCTAssert([[promise deref] isEqualToString:@"hello"], );
+    XCTAssert([[promise deref] isEqualToString:deliveryValue], @"Deref'd value was not equal to the delivered value!");
 }
 
 - (void)testPromiseBackgroundResolve

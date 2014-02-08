@@ -22,7 +22,7 @@
  THE SOFTWARE.
  */
 
-#import "CBPThreadingPrimitives.h"
+#import "CBPSynchronizationPrimitives.h"
 
 typedef void (^CBPDerefRealizationBlock)(id value);
 

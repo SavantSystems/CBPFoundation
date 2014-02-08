@@ -57,24 +57,4 @@
  */
 - (NSArray *)filteredArrayUsingBlock:(CBPArrayFilteringBlock)block;
 
-#pragma mark - Creating subarrays
-
-/**
- *  Returns a new array containing at most the given number of objects starting from the beginning of the receiving array. If there are less objects in the receiving array than requested, the receiver will be returned.
- *
- *  @param numberOfObjects The number of desired objects from the receiving array to take.
- *
- *  @return A new array whose length is at most the given number of objects, or the receiver if there are not enough objects.
- */
-- (NSArray *)arrayByTakingObjects:(NSUInteger)numberOfObjects;
-
-/**
- *  Returns a new array that is the result of dropping the given number of objects from the beginning of the receiving array.
- *
- *  @param numberOfObjects The number of objects to drop from the beginning of the receiving array.
- *
- *  @return A new array that is the result of dropping the given number of objects from the beginning of the receiving array.
- */
-- (NSArray *)arrayByDroppingObjects:(NSUInteger)numberOfObjects;
-
 @end

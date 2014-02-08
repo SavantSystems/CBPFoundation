@@ -22,6 +22,8 @@
  THE SOFTWARE.
  */
 
-#ifdef __OBJC__
-    @import Foundation;
-#endif
+@import Foundation;
+
+typedef id (^CBPArrayMappingBlock)(id object);
+
+typedef BOOL (^CBPArrayFilteringBlock)(id object);

@@ -23,11 +23,13 @@
  */
 
 #import "CBPRuntime.h"
+#import "NSThread+CBPExtensions.h"
+#import "CBPSynchronizationPrimitives.h"
+#import "CBPDeref.h"
+#import "CBPFuture.h"
+#import "CBPPromise.h"
 #import "CBPCollectionTypes.h"
 #import "NSArray+CBPExtensions.h"
 #import "NSMutableArray+CBPExtensions.h"
-#import "NSThread+CBPExtensions.h"
+#import "CBPTask.h"
 #import "CBPBackgroundTask.h"
-#import "CBPThreadingPrimitives.h"
-#import "CBPPromise.h"
-#import "CBPFuture.h"

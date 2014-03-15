@@ -24,6 +24,6 @@
 
 #import "CBPFoundation.h"
 
-#define CBPFunctionForSelector(functionName, returnType, target, selector, ...) returnType ( *functionName)(##__VA_ARGS__) = (returnType ( *)(##__VA_ARGS__))[target methodForSelector:selector]
+#define CBPFunctionForSelector(functionName, returnType, target, selector, ...) returnType (*functionName)(##__VA_ARGS__) = (returnType (*)(##__VA_ARGS__))[target methodForSelector:selector]
 
 #define CBPWeakVar(name, target) __weak __typeof__(target) name = target

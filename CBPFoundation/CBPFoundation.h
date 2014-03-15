@@ -22,6 +22,7 @@
  THE SOFTWARE.
  */
 
+@import Foundation;
 #import "CBPRuntime.h"
 #import "NSThread+CBPExtensions.h"
 #import "CBPSynchronizationPrimitives.h"

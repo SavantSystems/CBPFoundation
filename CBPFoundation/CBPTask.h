@@ -26,17 +26,17 @@
  *  This class handles the synchronization of a task that can stop and start.
  *  
  *  Delegate information:
- *      * There are two callback methods. Delegate based, and target/selector based methods.
+ *      * There are two methods of using CBPTask. Subclassing, or delegate based.
  *      * You must choose at least one and they may not be mixed. An exception will be thrown in the -start method if this requirement is not met.
  *
  *  Thread safety:
- *      * The stop and start methods tehmselves are thread safe, but they will call out to the various delegate methods on their calling thread.
+ *      * The stop and start methods themselves are thread safe, but they will call out to the subclass/delegate methods on their calling thread.
  *      * Your task must either be thread safe, or you should use some other threading methods to perform these methods on the right thread.
  *      For example:
  *    
  *          dispatch_async(mySocketQueue, ^{ [self.socketTask stop]; });
  *
- *      * If you know you'll want your task to be running on a background thread where these threading concerns are already taken care of, please see CBPBackgroundTask.
+ *      * If you know you'll want your task to be running on a background thread where these threading concerns are already taken care of, see CBPBackgroundTask.
  */
 
 @protocol CBPTaskDelegate;
@@ -50,24 +50,6 @@
  *  Sets/retrieves the delegate.
  */
 @property (weak) id<CBPTaskDelegate> delegate;
-
-
-#pragma mark - Target/selector based callbacks
-
-/**
- *  Sets/retrieves the start/stop target.
- */
-@property (weak) id target;
-
-/**
- *  This selector will be performed on the target to begin the task.
- */
-@property SEL startSelector;
-
-/**
- *  This selector will be performed on the target to end the task.
- */
-@property SEL stopSelector;
 
 
 #pragma mark - Starting/stopping
@@ -95,6 +77,23 @@
  *  @return YES if the task was stopped, NO if the task had already been stopped.
  */
 - (BOOL)stop;
+
+@end
+
+
+#pragma mark - CBPTaskSubclass methods
+
+@interface CBPTask (CBPTaskSubclass)
+
+/**
+ *  Start the task.
+ */
+- (void)startTask;
+
+/**
+ *  Stop the task.
+ */
+- (void)stopTask;
 
 @end
 

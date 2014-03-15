@@ -39,27 +39,25 @@
 {
     @synchronized (self)
     {
-        if (!(self.target && self.startSelector && self.stopSelector) && !self.delegate)
-        {
-            [NSException raise:NSInternalInconsistencyException format:@"Either target, start selector and stop selector must be set, or a delegate must be set %s", __PRETTY_FUNCTION__];
-        }
-        
         BOOL started = NO;
         
-        if (!self.isRunning)
+        if (![self.delegate conformsToProtocol:@protocol(CBPTaskDelegate)] && !([self respondsToSelector:@selector(startTask)] && [self respondsToSelector:@selector(stopTask)]))
+        {
+            [NSException raise:NSInternalInconsistencyException format:@"A delegate that conforms to the <CBPTaskDelegate> protocol must be set, or your class must override both the startTask and stopTask methods.\n%s", __PRETTY_FUNCTION__];
+        }
+        else if (!self.isRunning)
         {
             self.isRunning = YES;
             self.numberOfTimesTaskWasStarted++;
             started = YES;
             
-            if ([self.delegate respondsToSelector:@selector(startTask:)])
+            if ([self respondsToSelector:@selector(startTask)])
             {
-                [self.delegate startTask:self];
+                [self startTask];
             }
             else
             {
-                CBPFunctionForSelector(function, void, self.target, self.startSelector,);
-                function(self.target);
+                [self.delegate startTask:self];
             }
         }
         
@@ -78,14 +76,13 @@
             self.isRunning = NO;
             stopped = YES;
             
-            if ([self.delegate respondsToSelector:@selector(stopTask:)])
+            if ([self respondsToSelector:@selector(stopTask)])
             {
-                [self.delegate stopTask:self];
+                [self stopTask];
             }
             else
             {
-                CBPFunctionForSelector(function, void, self.target, self.stopSelector,);
-                function(self.target);
+                [self.delegate stopTask:self];
             }
         }
         

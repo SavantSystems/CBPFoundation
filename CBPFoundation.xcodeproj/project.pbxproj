@@ -76,6 +76,7 @@
 		1E67832418A68F75004C346E /* NSThread+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+CBPExtensions.m"; sourceTree = "<group>"; };
 		1E67833318A69030004C346E /* CBPTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPTask.h; sourceTree = "<group>"; };
 		1E67833418A69030004C346E /* CBPTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPTask.m; sourceTree = "<group>"; };
+		1EE06F4C18D492F8008BC350 /* CBPTaskSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPTaskSubclass.h; sourceTree = "<group>"; };
 		3EB13C42184AB0A30089FFB2 /* CBPFoundation-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBPFoundation-Prefix.pch"; sourceTree = "<group>"; };
 		3EFF9153184A2F550082E11C /* libCBPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCBPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EFF9156184A2F550082E11C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -151,6 +152,7 @@
 			children = (
 				1E67833318A69030004C346E /* CBPTask.h */,
 				1E67833418A69030004C346E /* CBPTask.m */,
+				1EE06F4C18D492F8008BC350 /* CBPTaskSubclass.h */,
 				1E67831118A68F75004C346E /* CBPBackgroundTask.h */,
 				1E67831218A68F75004C346E /* CBPBackgroundTask.m */,
 			);

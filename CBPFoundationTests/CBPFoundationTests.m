@@ -130,14 +130,13 @@
     
     __block BOOL someVariable = NO;
     
-    task.startBlock = ^id {
+    task.startBlock = ^{
         
         someVariable = YES;
-        return nil;
         
     };
     
-    task.stopBlock = ^(id object) {
+    task.stopBlock = ^{
         
         someVariable = NO;
         

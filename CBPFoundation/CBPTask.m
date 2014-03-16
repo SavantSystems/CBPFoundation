@@ -23,7 +23,7 @@
  */
 
 #import "CBPTask.h"
-#import "CBPFoundation.h"
+#import "CBPTaskSubclass.h"
 
 @interface CBPTask ()
 
@@ -41,24 +41,18 @@
     {
         BOOL started = NO;
         
-        if (![self.delegate conformsToProtocol:@protocol(CBPTaskDelegate)] && !([self respondsToSelector:@selector(startTask)] && [self respondsToSelector:@selector(stopTask)]))
+        if (![self.delegate conformsToProtocol:@protocol(CBPTaskDelegate)] &&
+            !([self respondsToSelector:@selector(startTask)] && [self respondsToSelector:@selector(stopTask)]) &&
+            !(self.startBlock && self.stopBlock))
         {
-            [NSException raise:NSInternalInconsistencyException format:@"A delegate that conforms to the <CBPTaskDelegate> protocol must be set, or your class must override both the startTask and stopTask methods.\n%s", __PRETTY_FUNCTION__];
+            [NSException raise:NSInternalInconsistencyException format:@"A delegate that conforms to the <CBPTaskDelegate> protocol must be set, or your class must override both the startTask and stopTask methods, or you must set both the start and stop blocks.\n%s", __PRETTY_FUNCTION__];
         }
         else if (!self.isRunning)
         {
             self.isRunning = YES;
             self.numberOfTimesTaskWasStarted++;
             started = YES;
-            
-            if ([self respondsToSelector:@selector(startTask)])
-            {
-                [self startTask];
-            }
-            else
-            {
-                [self.delegate startTask:self];
-            }
+            [self _startTask];
         }
         
         return started;
@@ -75,18 +69,52 @@
         {
             self.isRunning = NO;
             stopped = YES;
-            
-            if ([self respondsToSelector:@selector(stopTask)])
-            {
-                [self stopTask];
-            }
-            else
-            {
-                [self.delegate stopTask:self];
-            }
+            [self _stopTask];
         }
         
         return stopped;
+    }
+}
+
+- (void)_startTask
+{
+    [self _performStartTask];
+}
+
+- (void)_performStartTask
+{
+    if ([self respondsToSelector:@selector(startTask)])
+    {
+        [self startTask];
+    }
+    else if (self.delegate)
+    {
+        [self.delegate startTask:self];
+    }
+    else
+    {
+        self.startBlock();
+    }
+}
+
+- (void)_stopTask
+{
+    [self _performStopTask];
+}
+
+- (void)_performStopTask
+{
+    if ([self respondsToSelector:@selector(stopTask)])
+    {
+        [self stopTask];
+    }
+    else if (self.delegate)
+    {
+        [self.delegate stopTask:self];
+    }
+    else
+    {
+        self.stopBlock();
     }
 }
 

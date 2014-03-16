@@ -23,107 +23,37 @@
  */
 
 #import "CBPBackgroundTask.h"
-#import "CBPTask.h"
+#import "CBPTaskSubclass.h"
 
-@interface CBPBackgroundTask () <CBPTaskDelegate>
-
-@property CBPTask *task;
+@interface CBPBackgroundTask ()
 
 @property (readwrite) NSThread *thread;
-
-@property (readwrite) id object;
 
 @end
 
 @implementation CBPBackgroundTask
 
-- (void)dealloc
-{
-    [self stop];
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        self.task = [[CBPTask alloc] init];
-        self.task.delegate = self;
-    }
-    
-    return self;
-}
-
-- (BOOL)isRunning
-{
-    return self.task.isRunning;
-}
-
-- (void)start
-{
-    if (([self.delegate conformsToProtocol:@protocol(CBPBackgroundTaskDelegate)]) && (self.startBlock || self.stopBlock))
-    {
-        [NSException raise:NSInternalInconsistencyException format:@"A CBPBackgroundTask may not be started with a mixed delegate and block based callback structure"];
-        return;
-    }
-    
-    if (![self.delegate conformsToProtocol:@protocol(CBPBackgroundTaskDelegate)] && !self.startBlock && !self.stopBlock)
-    {
-        [NSException raise:NSInternalInconsistencyException format:@"A CBPBackgroundTask requires a delegate conforming to the CBPBackgroundTaskDelegate protocol or both start and stop blocks to be set before it can begin"];
-        return;
-    }
-    
-    [self.task start];
-}
-
-- (void)stop
-{
-    [self.task stop];
-}
-
-
-#pragma mark - CBPTaskDelegate methods
-
-- (void)startTask:(CBPTask *)task
+- (void)_startTask
 {
     self.thread = [NSThread cbp_runningThread];
     
     [self.thread cbp_performBlockSync:^{
         
-        if ([self.delegate respondsToSelector:@selector(startBackgroundTask:)])
-        {
-            self.object = [self.delegate startBackgroundTask:self];
-        }
-        else if (self.startBlock)
-        {
-            self.object = self.startBlock();
-        }
+        [self _performStartTask];
         
     }];
 }
 
-- (void)stopTask:(CBPTask *)task
+- (void)_stopTask
 {
     [self.thread cbp_performBlockSync:^{
         
-        if (self.delegate)
-        {
-            if ([self.delegate respondsToSelector:@selector(stopBackgroundTask:withObject:)])
-            {
-                [self.delegate stopBackgroundTask:self withObject:self.object];
-            }
-        }
-        else if (self.startBlock)
-        {
-            self.stopBlock(self.object);
-        }
+        [self _performStopTask];
         
     }];
     
     [self.thread cbp_stop];
     self.thread = nil;
-    self.object = nil;
 }
 
 @end

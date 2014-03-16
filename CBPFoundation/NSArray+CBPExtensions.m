@@ -81,7 +81,7 @@
     }
     else
     {
-        filteredArray = self;
+        filteredArray = [self copy]; /* Copy doesn't do anything for immutable arrays and allows for more consistent behavior when using mutable arrays. */
     }
     
     return filteredArray;

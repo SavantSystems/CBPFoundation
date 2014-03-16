@@ -234,7 +234,7 @@
 {
     NSString *value = @"";
     
-    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCancelledBlock isValid) {
+    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCanceledBlock isValid) {
         
         sleep(5.0);
         
@@ -253,7 +253,7 @@
 {
     NSString *value = @"";
     
-    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCancelledBlock isValid) {
+    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCanceledBlock isValid) {
         
         sleep(5.0);
         
@@ -270,7 +270,7 @@
 {
     NSString *value = @"";
     
-    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCancelledBlock isValid) {
+    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCanceledBlock isValid) {
         
         sleep(5.0);
         
@@ -291,7 +291,7 @@
 {
     NSString *value = @"";
     
-    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCancelledBlock isValid) {
+    CBPFuture *future = [[CBPFuture alloc] initWithQueue:nil workBlock:^id(CBPFutureCanceledBlock isValid) {
         
         sleep(5.0);
         
@@ -309,7 +309,7 @@
     
     XCTAssert(![future cancel], @"Should not have been able to cancel future");
     
-    XCTAssert([[future derefWithTimeoutInterval:10.0 timeoutValue:@"hello"] isEqualToString:CBPFutureCancelledValue], @"Future deref did not work");
+    XCTAssert([[future derefWithTimeoutInterval:10.0 timeoutValue:@"hello"] isEqualToString:CBPFutureCanceledValue], @"Future deref did not work");
 }
 
 @end

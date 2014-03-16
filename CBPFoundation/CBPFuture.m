@@ -25,7 +25,7 @@
 #import "CBPFuture.h"
 #import "CBPDerefSubclass.h"
 
-id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
+id const CBPFutureCanceledValue = @"CBPFutureCanceledValue";
 
 @interface CBPFuture ()
 
@@ -35,7 +35,7 @@ id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
 
 @property BOOL isRealized;
 
-@property BOOL isCancelled;
+@property BOOL isCanceled;
 
 @end
 
@@ -77,9 +77,9 @@ id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
 
 - (BOOL)cancel
 {
-    return [self assignValue:CBPFutureCancelledValue notify:NO criticalBlock:^{
+    return [self assignValue:CBPFutureCanceledValue notify:NO criticalBlock:^{
         
-        self.isCancelled = YES;
+        self.isCanceled = YES;
         self.isRealized = YES;
         
     }];
@@ -104,7 +104,7 @@ id const CBPFutureCancelledValue = @"CBPFutureCancelledValue";
             {
                 value = self.workBlock(^BOOL {
                     
-                    return self.isCancelled;
+                    return self.isCanceled;
                     
                 });
             }

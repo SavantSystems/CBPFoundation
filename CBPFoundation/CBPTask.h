@@ -93,9 +93,9 @@
 @end
 
 
-#pragma mark - CBPTaskSubclass methods
+#pragma mark - CBPTask subclass methods
 
-@interface CBPTask (CBPTaskSubclass)
+@interface CBPTask (ForSubclassEyesOnly)
 
 /**
  *  Start the task.

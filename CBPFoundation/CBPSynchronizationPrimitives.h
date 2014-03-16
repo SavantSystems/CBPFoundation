@@ -56,6 +56,6 @@
 
 - (BOOL)cancel;
 
-- (BOOL)isCancelled;
+- (BOOL)isCanceled;
 
 @end

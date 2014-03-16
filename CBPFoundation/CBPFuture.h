@@ -26,26 +26,26 @@
 #import "CBPDeref.h"
 
 /**
- *  The value returned by a cancelled future.
+ *  The value returned by a canceled future.
  */
-extern id const CBPFutureCancelledValue;
+extern id const CBPFutureCanceledValue;
 
 /**
- *  Use this block to determine if the future is cancelled or not. Similar to an NSOperation, the value of this block should be checked occasionally in longer running work blocks.
+ *  Use this block to determine if the future is canceled or not. Similar to an NSOperation, the value of this block should be checked occasionally in longer running work blocks.
  *  This block is a convenience to avoid capturing the future in the block and causing a retain cycle.
  *
- *  @return YES if the future has been cancelled, otherwise NO.
+ *  @return YES if the future has been canceled, otherwise NO.
  */
-typedef BOOL (^CBPFutureCancelledBlock)(void);
+typedef BOOL (^CBPFutureCanceledBlock)(void);
 
 /**
  *  Compute the value to cache. This block will be ignored if -main is overriden.
  *
- *  @param isCancelled A convenience block to determine if the future is canclled or not. Its value should be checked occasionally in longer running work blocks.
+ *  @param isCanceled A convenience block to determine if the future is canclled or not. Its value should be checked occasionally in longer running work blocks.
  *
  *  @return The result of the work block which will be cached.
  */
-typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isCancelled);
+typedef id (^CBPFutureWorkBlock)(CBPFutureCanceledBlock isCanceled);
 
 
 #pragma mark -
@@ -74,9 +74,9 @@ typedef id (^CBPFutureWorkBlock)(CBPFutureCancelledBlock isCancelled);
 @end
 
 
-#pragma mark - Optional methods for subclassing
+#pragma mark - CBPFuture subclass methods
 
-@interface CBPFuture (SubclassableMethods)
+@interface CBPFuture (ForSubclassEyesOnly)
 
 /**
  *  Compute the value to cache. This method takes precedence over the workBlock.

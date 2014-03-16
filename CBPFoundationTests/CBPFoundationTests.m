@@ -44,6 +44,16 @@
 }
 
 
+#pragma mark - String tests
+
+- (void)testStringContains
+{
+    XCTAssert([@"hello" containsString:@"ll"], @"hello should contain ll");
+    XCTAssert([@"hello" containsString:@"LL" options:NSCaseInsensitiveSearch], @"hello should contain LL case insensitively");
+    XCTAssert([@"hello" containsString:@"LL" options:NSCaseInsensitiveSearch range:NSMakeRange(2, 2)], @"hello should contain LL case insensitively in the correct range");
+}
+
+
 #pragma mark - Mapping tests
 
 - (void)testArraySelectorMapping

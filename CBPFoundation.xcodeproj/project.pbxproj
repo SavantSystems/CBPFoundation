@@ -23,6 +23,8 @@
 		1E67833218A68F75004C346E /* NSThread+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E67832418A68F75004C346E /* NSThread+CBPExtensions.m */; };
 		1E67833518A69030004C346E /* CBPTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E67833418A69030004C346E /* CBPTask.m */; };
 		1E67833618A69030004C346E /* CBPTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E67833418A69030004C346E /* CBPTask.m */; };
+		1EE06F5218D5E1D0008BC350 /* NSString+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE06F5118D5E1D0008BC350 /* NSString+CBPExtensions.m */; };
+		1EE06F5318D5E49A008BC350 /* NSString+CBPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE06F5118D5E1D0008BC350 /* NSString+CBPExtensions.m */; };
 		3EFF9157184A2F550082E11C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFF9156184A2F550082E11C /* Foundation.framework */; };
 		3EFF9165184A2F550082E11C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFF9164184A2F550082E11C /* XCTest.framework */; };
 		3EFF9166184A2F550082E11C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EFF9156184A2F550082E11C /* Foundation.framework */; };
@@ -77,6 +79,8 @@
 		1E67833318A69030004C346E /* CBPTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPTask.h; sourceTree = "<group>"; };
 		1E67833418A69030004C346E /* CBPTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPTask.m; sourceTree = "<group>"; };
 		1EE06F4C18D492F8008BC350 /* CBPTaskSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPTaskSubclass.h; sourceTree = "<group>"; };
+		1EE06F5018D5E1D0008BC350 /* NSString+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CBPExtensions.h"; sourceTree = "<group>"; };
+		1EE06F5118D5E1D0008BC350 /* NSString+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CBPExtensions.m"; sourceTree = "<group>"; };
 		3EB13C42184AB0A30089FFB2 /* CBPFoundation-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBPFoundation-Prefix.pch"; sourceTree = "<group>"; };
 		3EFF9153184A2F550082E11C /* libCBPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCBPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EFF9156184A2F550082E11C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -159,6 +163,15 @@
 			name = Tasks;
 			sourceTree = "<group>";
 		};
+		1EE06F4F18D5E1AE008BC350 /* String Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1EE06F5018D5E1D0008BC350 /* NSString+CBPExtensions.h */,
+				1EE06F5118D5E1D0008BC350 /* NSString+CBPExtensions.m */,
+			);
+			name = "String Extensions";
+			sourceTree = "<group>";
+		};
 		3EFF914A184A2F550082E11C = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +206,7 @@
 			children = (
 				1E67831818A68F75004C346E /* CBPFoundation.h */,
 				1E67831D18A68F75004C346E /* CBPRuntime.h */,
+				1EE06F4F18D5E1AE008BC350 /* String Extensions */,
 				1E6308B718A69A1D001B7009 /* Thread Extensions */,
 				1E6308B618A6999A001B7009 /* Synchronization */,
 				1E6308B518A698F2001B7009 /* Collection Extensions */,
@@ -329,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E67832718A68F75004C346E /* CBPDeref.m in Sources */,
+				1EE06F5218D5E1D0008BC350 /* NSString+CBPExtensions.m in Sources */,
 				1E67832918A68F75004C346E /* CBPFuture.m in Sources */,
 				1E67832518A68F75004C346E /* CBPBackgroundTask.m in Sources */,
 				1E67832B18A68F75004C346E /* CBPPromise.m in Sources */,
@@ -343,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EE06F5318D5E49A008BC350 /* NSString+CBPExtensions.m in Sources */,
 				1E67833018A68F75004C346E /* NSMutableArray+CBPExtensions.m in Sources */,
 				1E67832E18A68F75004C346E /* NSArray+CBPExtensions.m in Sources */,
 				1E67833618A69030004C346E /* CBPTask.m in Sources */,

@@ -22,7 +22,7 @@
  THE SOFTWARE.
  */
 
-#import "CBPFoundation.h"
+@import Foundation;
 
 @interface NSThread (CBPExtensions)
 

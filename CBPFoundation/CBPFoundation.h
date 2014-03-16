@@ -24,13 +24,14 @@
 
 @import Foundation;
 #import "CBPRuntime.h"
+#import "NSString+CBPExtensions.h"
 #import "NSThread+CBPExtensions.h"
+#import "NSArray+CBPExtensions.h"
+#import "NSMutableArray+CBPExtensions.h"
 #import "CBPSynchronizationPrimitives.h"
 #import "CBPDeref.h"
 #import "CBPFuture.h"
 #import "CBPPromise.h"
 #import "CBPCollectionTypes.h"
-#import "NSArray+CBPExtensions.h"
-#import "NSMutableArray+CBPExtensions.h"
 #import "CBPTask.h"
 #import "CBPBackgroundTask.h"

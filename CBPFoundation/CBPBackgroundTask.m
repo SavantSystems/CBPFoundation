@@ -24,6 +24,7 @@
 
 #import "CBPBackgroundTask.h"
 #import "CBPTaskSubclass.h"
+#import "NSThread+CBPExtensions.h"
 
 @interface CBPBackgroundTask ()
 

@@ -23,6 +23,7 @@
  */
 
 #import "NSArray+CBPExtensions.h"
+#import "CBPRuntime.h"
 
 @implementation NSArray (CBPExtensions)
 

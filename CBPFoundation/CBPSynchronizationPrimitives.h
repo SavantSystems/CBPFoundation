@@ -22,6 +22,8 @@
  THE SOFTWARE.
  */
 
+@import Foundation;
+
 #pragma mark - CBPDelay
 
 @protocol CBPDelay <NSObject>

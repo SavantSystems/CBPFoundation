@@ -26,7 +26,8 @@
  *  This is a subclass of CBPTask which creates a new thread to perform the start and stop callbacks on. The -start and -stop methods are completely thread safe.
  */
 
-#import "CBPFoundation.h"
+@import Foundation;
+#import "CBPTask.h"
 
 @interface CBPBackgroundTask : CBPTask
 

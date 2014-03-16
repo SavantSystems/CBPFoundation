@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
     return self;
 }
 
-- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(void (^)(id value))successBlock timeoutBlock:(void (^)(void))timeoutBlock
+- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(CBPDerefRealizationBlock)successBlock timeoutBlock:(dispatch_block_t)timeoutBlock
 {
     static NSString *const DefaultTimeoutValue = @"DefaultTimeoutValue";
     

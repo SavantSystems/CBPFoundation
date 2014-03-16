@@ -43,7 +43,11 @@ id const CBPFutureCanceledValue = @"CBPFutureCanceledValue";
 
 - (instancetype)initWithQueue:(dispatch_queue_t)queue workBlock:(CBPFutureWorkBlock)workBlock
 {
-    if (!(workBlock || [self respondsToSelector:@selector(main)]))
+    if (workBlock && [self respondsToSelector:@selector(main)])
+    {
+        [NSException raise:NSInternalInconsistencyException format:@"You can not set both a block and override the -main method -- %s", __PRETTY_FUNCTION__];
+    }
+    else if (!(workBlock || [self respondsToSelector:@selector(main)]))
     {
         [NSException raise:NSInternalInconsistencyException format:@"A block must be set or the -main method must be overriden -- %s", __PRETTY_FUNCTION__];
     }
@@ -53,7 +57,7 @@ id const CBPFutureCanceledValue = @"CBPFutureCanceledValue";
         
         if (self)
         {
-            self.workQueue = queue ? queue : dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            self.workQueue = queue;
             
             if (![self respondsToSelector:@selector(main)])
             {
@@ -117,7 +121,9 @@ id const CBPFutureCanceledValue = @"CBPFutureCanceledValue";
         }
     };
     
-    dispatch_async(self.workQueue, workBlock);
+    dispatch_queue_t queue = self.workQueue ? self.workQueue : dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_async(queue, workBlock);
 }
 
 @end

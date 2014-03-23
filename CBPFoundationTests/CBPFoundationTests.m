@@ -204,12 +204,17 @@
     CBPPromise *promise = [[CBPPromise alloc] init];
     
     promise.realizationBlock = ^(id value) {
-        
+
         XCTAssert([value isEqualToString:promiseValue], @"Promise value should have been equal to: 'hello");
+        XCTAssert(![value isEqualToString:@""], @"Promise value should not have been equal to: '");
         
     };
+
+    sleep(1);
     
     [promise deliver:promiseValue];
+
+    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 }
 
 - (void)testPromiseBackgroundResolveTimeout

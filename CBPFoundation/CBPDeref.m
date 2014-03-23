@@ -98,13 +98,15 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
         {
             @synchronized (self)
             {
-                if (self.realizationBlock)
+                CBPDerefRealizationBlock realizationBlock = self.realizationBlock;
+
+                if (realizationBlock)
                 {
                     dispatch_queue_t dispatchQueue = self.realizationQueue ? self.realizationQueue : dispatch_get_main_queue();
-                    
+
                     dispatch_async(dispatchQueue, ^{
                         
-                        self.realizationBlock(value);
+                        realizationBlock(value);
                         
                     });
                     

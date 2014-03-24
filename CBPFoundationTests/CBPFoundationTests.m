@@ -235,6 +235,33 @@
     XCTAssert([[promise derefWithTimeoutInterval:5.0 timeoutValue:@""] isEqualToString:promiseValue], @"Promise shouldn't have timedout and show have been equal to: '%@'", promiseValue);
 }
 
+- (void)testPromiseTimeoutTimeout
+{
+    CBPPromise *promise = [[CBPPromise alloc] initWithTimeout:2.0];
+
+    sleep(3);
+
+    XCTAssert(![promise deliver:@""], @"Shouldn't have been able to deliver because of timeout");
+
+    XCTAssert([promise deref] == CBPPromiseTimeoutValue, @"Promise should have equaled timeout value");
+}
+
+- (void)testPromiseTimeoutSucceed
+{
+    CBPPromise *promise = [[CBPPromise alloc] initWithTimeout:2.0];
+
+    sleep(1);
+
+    NSString *deliveryValue = @"";
+
+    XCTAssert([promise deliver:deliveryValue], @"Should have been able to deliver");
+
+    XCTAssert([promise deref] == deliveryValue, @"Promise should have equaled ''");
+}
+
+
+#pragma mark - Future tests
+
 - (void)testFutureDerefSameThread
 {
     NSString *value = @"";

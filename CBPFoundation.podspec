@@ -9,4 +9,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/noremac/CBPFoundation.git", :tag => "0.0.1" }
   s.source_files = 'CBPFoundation/**/*.{h,m}'
   s.requires_arc = true
+  s.subspec "Threading" do |sp|
+    sp.source_files = "CBPFoundation/CBPSynchronizationPrimitives.h", "CBPFoundation/CBPDeref.{h,m}", "CBPFoundation/NSThread+CBPExtensions.{h,m}", "CBPFoundation/CBPPromise.{h,m}", "CBPFoundation/CBPFuture.{h,m}", "CBPFoundation/CBPDerefSubclass.h"
+  end
 end
+

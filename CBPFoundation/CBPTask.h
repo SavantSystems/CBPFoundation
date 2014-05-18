@@ -92,7 +92,6 @@
 
 @end
 
-
 #pragma mark - CBPTask subclass methods
 
 @interface CBPTask (ForSubclassEyesOnly)

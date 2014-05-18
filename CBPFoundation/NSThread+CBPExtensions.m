@@ -29,7 +29,6 @@
 
 @implementation NSThread (CBPExtensions)
 
-
 #pragma mark - Long running thread methods
 
 + (NSThread *)cbp_runningThread
@@ -85,7 +84,6 @@
         
     }];
 }
-
 
 #pragma mark - Block methods
 

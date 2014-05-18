@@ -101,7 +101,6 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
     return [self deliver:value criticalBlock:nil];
 }
 
-
 #pragma mark -
 
 - (BOOL)deliver:(id)value criticalBlock:(dispatch_block_t)criticalBlock

@@ -76,7 +76,6 @@ id const CBPFutureCanceledValue = @"CBPFutureCanceledValue";
     return [self initWithQueue:queue workBlock:nil];
 }
 
-
 #pragma mark - CBPFuture methods
 
 - (BOOL)cancel
@@ -88,7 +87,6 @@ id const CBPFutureCanceledValue = @"CBPFutureCanceledValue";
         
     }];
 }
-
 
 #pragma mark - Internal
 

@@ -47,7 +47,6 @@ typedef BOOL (^CBPFutureCanceledBlock)(void);
  */
 typedef id (^CBPFutureWorkBlock)(CBPFutureCanceledBlock isCanceled);
 
-
 #pragma mark -
 
 @interface CBPFuture : CBPDeref <CBPFuture>
@@ -72,7 +71,6 @@ typedef id (^CBPFutureWorkBlock)(CBPFutureCanceledBlock isCanceled);
 - (instancetype)initWithQueue:(dispatch_queue_t)queue;
 
 @end
-
 
 #pragma mark - CBPFuture subclass methods
 

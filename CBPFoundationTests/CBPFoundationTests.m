@@ -43,7 +43,6 @@
     [super tearDown];
 }
 
-
 #pragma mark - String tests
 
 - (void)testStringContains
@@ -52,7 +51,6 @@
     XCTAssert([@"hello" containsString:@"LL" options:NSCaseInsensitiveSearch], @"hello should contain LL case insensitively");
     XCTAssert([@"hello" containsString:@"LL" options:NSCaseInsensitiveSearch range:NSMakeRange(2, 2)], @"hello should contain LL case insensitively in the correct range");
 }
-
 
 #pragma mark - Mapping tests
 
@@ -84,7 +82,6 @@
     }
 }
 
-
 #pragma mark - Filtering tests
 
 - (void)testImmutableArrayFiltering
@@ -113,7 +110,6 @@
     XCTAssert([testArray isEqualToArray:@[@"1"]], @"Filtering did not work!");
 }
 
-
 #pragma mark - Thread tests
 
 - (void)testBasicThreadExecution
@@ -130,7 +126,6 @@
     
     XCTAssert(someVariable, @"Thread synchronous execution did not work");
 }
-
 
 #pragma mark - CBPBackgroundTask tests
 
@@ -160,7 +155,6 @@
     
     XCTAssert(!someVariable, @"Task did not finish");
 }
-
 
 #pragma mark - Promise tests
 
@@ -258,7 +252,6 @@
 
     XCTAssert([promise deref] == deliveryValue, @"Promise should have equaled ''");
 }
-
 
 #pragma mark - Future tests
 

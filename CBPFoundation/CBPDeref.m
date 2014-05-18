@@ -75,7 +75,6 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
     }
 }
 
-
 #pragma mark - CBPDerefSubclass methods
 
 - (BOOL)assignValue:(id)value notify:(BOOL)notify criticalBlock:(dispatch_block_t)criticalBlock
@@ -124,7 +123,6 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
 {
     return [self.lock condition] == CBPDerefLockStateRealized;
 }
-
 
 #pragma mark - CBPDeref methods
 

@@ -26,6 +26,7 @@
 #import "CBPDerefSubclass.h"
 #import "NSThread+CBPExtensions.h"
 
+NSTimeInterval const CBPPromiseInfiniteTimeout = -1;
 id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
 
 @interface CBPPromise ()
@@ -89,6 +90,16 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
     }
 
     return self;
+}
+
+- (void)invalidate
+{
+    @synchronized (self)
+    {
+        self.realizationQueue = NULL;
+        self.realizationBlock = NULL;
+        [self invalidate:nil];
+    }
 }
 
 - (BOOL)isRealized

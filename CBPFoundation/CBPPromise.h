@@ -25,6 +25,8 @@
 @import Foundation;
 #import "CBPDeref.h"
 
+extern NSTimeInterval const CBPPromiseInfiniteTimeout;
+
 /**
  *  The value returned by an invalid promise.
  */
@@ -45,5 +47,7 @@ extern id const CBPPromiseTimeoutValue;
  *  @return An initialized promise.
  */
 - (instancetype)initWithTimeout:(NSTimeInterval)timeout;
+
+- (void)invalidate;
 
 @end

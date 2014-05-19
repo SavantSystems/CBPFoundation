@@ -25,8 +25,6 @@
 @import Foundation;
 #import "CBPDeref.h"
 
-extern NSTimeInterval const CBPPromiseInfiniteTimeout;
-
 /**
  *  The value returned by an invalid promise.
  */
@@ -35,19 +33,22 @@ extern id const CBPPromiseTimeoutValue;
 @interface CBPPromise : CBPDeref <CBPPromise>
 
 /**
- *  YES if a value was delivered within the timeout window, otherwise NO.
+ *  @p YES if a value was delivered within the timeout window, otherwise @p NO.
  */
 @property (readonly, getter = isValid) BOOL valid;
 
 /**
- *  Initializes a promise with a timeout value. If a value is not delivered within the timeout window, -deref will return CBPPromiseTimeoutValue and isValid will be NO.
+ *  Initializes a promise with a timeout value. If a value is not delivered within the timeout window, @p -deref will return @p CBPPromiseTimeoutValue and @p isValid will be @p NO.
  *
- *  @param timeout The length of time the promise is valid.
+ *  @param timeout The length of time the promise is valid. This value must be greater than 0 or an exception will be thrown.
  *
  *  @return An initialized promise.
  */
 - (instancetype)initWithTimeout:(NSTimeInterval)timeout;
 
+/**
+ *  Invalidates the promise.
+ */
 - (void)invalidate;
 
 @end

@@ -26,7 +26,6 @@
 #import "CBPDerefSubclass.h"
 #import "NSThread+CBPExtensions.h"
 
-NSTimeInterval const CBPPromiseInfiniteTimeout = -1;
 id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
 
 @interface CBPPromise ()
@@ -51,6 +50,11 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
     return sharedPromiseTimerThread;
 }
 
+- (void)dealloc
+{
+    [self invalidate];
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -67,7 +71,7 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
 {
     if (timeout <= 0)
     {
-        [NSException raise:NSInvalidArgumentException format:@""];
+        [NSException raise:NSInvalidArgumentException format:@"A CBPPromise timeout value must be greater than 0."];
     }
     else
     {
@@ -94,16 +98,7 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
 
 - (void)invalidate
 {
-    @synchronized (self)
-    {
-        [[[self class] sharedPromiseTimerThread] cbp_performBlockSync:^{
-            [self.timeoutTimer invalidate];
-        }];
-
-        self.realizationQueue = NULL;
-        self.realizationBlock = NULL;
-        [self invalidate:nil];
-    }
+    [self deliver:nil notify:NO invalidate:YES];
 }
 
 - (BOOL)isRealized
@@ -113,18 +108,18 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
 
 - (BOOL)deliver:(id)value
 {
-    return [self deliver:value criticalBlock:nil];
+    return [self deliver:value notify:YES invalidate:NO];
 }
 
 #pragma mark -
 
-- (BOOL)deliver:(id)value criticalBlock:(dispatch_block_t)criticalBlock
+- (BOOL)deliver:(id)value notify:(BOOL)notify invalidate:(BOOL)invalidate
 {
-    return [self assignValue:value notify:YES criticalBlock:^{
+    return [self assignValue:value notify:notify criticalBlock:^{
 
-        if (criticalBlock)
+        if (invalidate)
         {
-            criticalBlock();
+            self.valid = NO;
         }
 
         if (self.timeoutTimer)
@@ -132,20 +127,16 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
             [[[self class] sharedPromiseTimerThread] cbp_performBlockSync:^{
 
                 [self.timeoutTimer invalidate];
-
+                
             }];
         }
-        
+
     }];
 }
 
 - (void)invalidate:(NSTimer *)timer
 {
-    [self deliver:CBPPromiseTimeoutValue criticalBlock:^{
-
-        self.valid = NO;
-        
-    }];
+    [self deliver:CBPPromiseTimeoutValue notify:YES invalidate:YES];
 }
 
 @end

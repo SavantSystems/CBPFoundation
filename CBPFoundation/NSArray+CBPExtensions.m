@@ -45,8 +45,8 @@
 {
     return [self arrayByMappingBlock:^id(id object) {
         
-        CBPFunctionForSelector(f, id, object, selector,);
-        return f();
+        CBPFunctionForSelector(f, object, selector, id);
+        return f(object, selector);
         
     }];
 }

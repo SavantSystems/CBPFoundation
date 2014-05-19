@@ -478,6 +478,7 @@
 				WARNING_CFLAGS = (
 					"-Weverything",
 					"-Wno-objc-missing-property-synthesis",
+					"-Wno-gnu",
 				);
 			};
 			name = Debug;
@@ -498,6 +499,7 @@
 				WARNING_CFLAGS = (
 					"-Weverything",
 					"-Wno-objc-missing-property-synthesis",
+					"-Wno-gnu",
 				);
 			};
 			name = Release;

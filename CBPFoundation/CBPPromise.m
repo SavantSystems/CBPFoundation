@@ -96,6 +96,10 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
 {
     @synchronized (self)
     {
+        [[[self class] sharedPromiseTimerThread] cbp_performBlockSync:^{
+            [self.timeoutTimer invalidate];
+        }];
+
         self.realizationQueue = NULL;
         self.realizationBlock = NULL;
         [self invalidate:nil];

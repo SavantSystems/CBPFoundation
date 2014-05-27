@@ -26,8 +26,13 @@
 
 @interface CBPDeref ()
 
-- (BOOL)assignValue:(id)value notify:(BOOL)notify criticalBlock:(dispatch_block_t)criticalBlock;
-
-- (BOOL)valueHasBeenAssigned;
+/**
+ *  Subclasses can use this method to realize a deref's value.
+ *
+ *  @param value The value to assign.
+ *
+ *  @return YES if the deref hasn't already been realized and hasn't been invalidated; otherwise, NO.
+ */
+- (BOOL)assignValue:(id)value;
 
 @end

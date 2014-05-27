@@ -69,7 +69,6 @@
 		1E67831B18A68F75004C346E /* CBPPromise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPPromise.h; sourceTree = "<group>"; };
 		1E67831C18A68F75004C346E /* CBPPromise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPPromise.m; sourceTree = "<group>"; };
 		1E67831D18A68F75004C346E /* CBPRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPRuntime.h; sourceTree = "<group>"; };
-		1E67831E18A68F75004C346E /* CBPSynchronizationPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPSynchronizationPrimitives.h; sourceTree = "<group>"; };
 		1E67831F18A68F75004C346E /* NSArray+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CBPExtensions.h"; sourceTree = "<group>"; };
 		1E67832018A68F75004C346E /* NSArray+CBPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+CBPExtensions.m"; sourceTree = "<group>"; };
 		1E67832118A68F75004C346E /* NSMutableArray+CBPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+CBPExtensions.h"; sourceTree = "<group>"; };
@@ -130,7 +129,6 @@
 		1E6308B618A6999A001B7009 /* Synchronization */ = {
 			isa = PBXGroup;
 			children = (
-				1E67831E18A68F75004C346E /* CBPSynchronizationPrimitives.h */,
 				1E67831418A68F75004C346E /* CBPDeref.h */,
 				1E67831518A68F75004C346E /* CBPDeref.m */,
 				1E67831618A68F75004C346E /* CBPDerefSubclass.h */,

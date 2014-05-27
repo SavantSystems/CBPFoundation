@@ -28,7 +28,6 @@
 #import "NSThread+CBPExtensions.h"
 #import "NSArray+CBPExtensions.h"
 #import "NSMutableArray+CBPExtensions.h"
-#import "CBPSynchronizationPrimitives.h"
 #import "CBPDeref.h"
 #import "CBPFuture.h"
 #import "CBPPromise.h"

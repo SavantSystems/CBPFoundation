@@ -169,10 +169,14 @@
     XCTAssert([promise deliver:deliveryValue], @"Promise should have been able to be delivered");
     
     XCTAssert([promise isRealized], @"Promise should be considered resolved");
+
+    XCTAssert([promise isValid], @"Promise should have been valid");
     
     XCTAssert(![promise deliver:@"hello 1"], @"Promise is already delivered and should not have been able to be delivered again");
     
     XCTAssert([[promise deref] isEqualToString:deliveryValue], @"Deref'd value was not equal to the delivered value!");
+
+    XCTAssert(![promise invalidateWithError:nil], @"Shouldn't have been able to invalidate promise");
 }
 
 - (void)testPromiseBackgroundResolve
@@ -197,7 +201,7 @@
     
     CBPPromise *promise = [[CBPPromise alloc] init];
     
-    promise.realizationBlock = ^(id value) {
+    promise.successBlock = ^(id value) {
 
         XCTAssert([value isEqualToString:promiseValue], @"Promise value should have been equal to: 'hello");
         XCTAssert(![value isEqualToString:@""], @"Promise value should not have been equal to: '");
@@ -251,6 +255,28 @@
     XCTAssert([promise deliver:deliveryValue], @"Should have been able to deliver");
 
     XCTAssert([promise deref] == deliveryValue, @"Promise should have equaled ''");
+}
+
+- (void)testPromiseInvalidateImmediate
+{
+    CBPPromise *promise = [[CBPPromise alloc] init];
+    XCTAssert([promise invalidateWithError:nil], @"Should have been able to invalidate promise");
+    XCTAssertEqualObjects(CBPDerefInvalidValue, [promise deref], @"Deref value should have been the invalid value");
+    XCTAssert(![promise deliver:nil], @"Shouldn't have been able to deliver promise");
+}
+
+- (void)testPromiseInvalidateDelay
+{
+    CBPPromise *promise = [[CBPPromise alloc] init];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+        sleep(2);
+        [promise invalidateWithError:nil];
+
+    });
+
+    XCTAssertEqualObjects([promise deref], CBPDerefInvalidValue, @"Deref should have returned the invalid value");
 }
 
 #pragma mark - Future tests
@@ -328,13 +354,13 @@
     
     XCTAssert(![future isRealized], @"Should not have been realized");
     
-    XCTAssert([future cancel], @"Should have been able to cancel future");
+    XCTAssert([future invalidateWithError:nil], @"Should have been able to cancel future");
     
     XCTAssert([future isRealized], @"Should have been realized");
     
-    XCTAssert(![future cancel], @"Should not have been able to cancel future");
+    XCTAssert(![future invalidateWithError:nil], @"Should not have been able to cancel future");
     
-    XCTAssert([[future derefWithTimeoutInterval:10.0 timeoutValue:@"hello"] isEqualToString:CBPFutureCanceledValue], @"Future deref did not work");
+    XCTAssert([[future derefWithTimeoutInterval:10.0 timeoutValue:@"hello"] isEqualToString:CBPDerefInvalidValue], @"Future deref did not work");
 }
 
 @end

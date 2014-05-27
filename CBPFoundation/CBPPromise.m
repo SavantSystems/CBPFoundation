@@ -30,8 +30,6 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
 
 @interface CBPPromise ()
 
-@property (getter = isValid) BOOL valid;
-
 @property (weak) NSTimer *timeoutTimer;
 
 @end
@@ -52,19 +50,7 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
 
 - (void)dealloc
 {
-    [self invalidate];
-}
-
-- (instancetype)init
-{
-    self = [super init];
-
-    if (self)
-    {
-        self.valid = YES;
-    }
-
-    return self;
+    [self invalidateWithError:nil];
 }
 
 - (instancetype)initWithTimeout:(NSTimeInterval)timeout
@@ -79,8 +65,6 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
 
         if (self)
         {
-            self.valid = YES;
-
             [[[self class] sharedPromiseTimerThread] cbp_performBlockSync:^{
 
                 self.timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:timeout
@@ -96,47 +80,30 @@ id const CBPPromiseTimeoutValue = @"CBPPromiseTimeoutValue";
     return self;
 }
 
-- (void)invalidate
-{
-    [self deliver:nil notify:NO invalidate:YES];
-}
-
-- (BOOL)isRealized
-{
-    return [self valueHasBeenAssigned];
-}
-
 - (BOOL)deliver:(id)value
 {
-    return [self deliver:value notify:YES invalidate:NO];
+    return [self _deliver:value];
 }
 
 #pragma mark -
 
-- (BOOL)deliver:(id)value notify:(BOOL)notify invalidate:(BOOL)invalidate
+- (BOOL)_deliver:(id)value
 {
-    return [self assignValue:value notify:notify criticalBlock:^{
+    BOOL delivered = [self assignValue:value];
 
-        if (invalidate)
-        {
-            self.valid = NO;
-        }
+    if (self.timeoutTimer)
+    {
+        [[[self class] sharedPromiseTimerThread] cbp_performBlockSync:^{
+            [self.timeoutTimer invalidate];
+        }];
+    }
 
-        if (self.timeoutTimer)
-        {
-            [[[self class] sharedPromiseTimerThread] cbp_performBlockSync:^{
-
-                [self.timeoutTimer invalidate];
-                
-            }];
-        }
-
-    }];
+    return delivered;
 }
 
 - (void)invalidate:(NSTimer *)timer
 {
-    [self deliver:CBPPromiseTimeoutValue notify:YES invalidate:YES];
+    [self _deliver:CBPPromiseTimeoutValue];
 }
 
 @end

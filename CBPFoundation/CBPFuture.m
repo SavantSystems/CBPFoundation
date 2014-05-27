@@ -25,70 +25,75 @@
 #import "CBPFuture.h"
 #import "CBPDerefSubclass.h"
 
-id const CBPFutureCanceledValue = @"CBPFutureCanceledValue";
-
 @interface CBPFuture ()
 
 @property dispatch_queue_t workQueue;
 
 @property (copy) CBPFutureWorkBlock workBlock;
 
-@property BOOL isRealized;
-
-@property BOOL isCanceled;
-
 @end
 
 @implementation CBPFuture
 
++ (dispatch_queue_t)sharedDispatchQueue
+{
+    static dispatch_queue_t sharedDispatchQueue = NULL;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedDispatchQueue = dispatch_queue_create("CBPFutureSharedDispatchQueue", DISPATCH_QUEUE_CONCURRENT);
+    });
+
+    return sharedDispatchQueue;
+}
+
 - (instancetype)initWithQueue:(dispatch_queue_t)queue workBlock:(CBPFutureWorkBlock)workBlock
 {
-    if (workBlock && [self respondsToSelector:@selector(main)])
+    if (!workBlock)
     {
-        [NSException raise:NSInternalInconsistencyException format:@"You can not set both a block and override the -main method -- %s", __PRETTY_FUNCTION__];
+        [NSException raise:NSInternalInconsistencyException format:@"workBlock must not be nil. %s", __PRETTY_FUNCTION__];
     }
-    else if (!(workBlock || [self respondsToSelector:@selector(main)]))
+    else if ([self respondsToSelector:@selector(main)])
     {
-        [NSException raise:NSInternalInconsistencyException format:@"A block must be set or the -main method must be overriden -- %s", __PRETTY_FUNCTION__];
+        [NSException raise:NSInternalInconsistencyException format:@"-main must not be implemented when using a work block. %s", __PRETTY_FUNCTION__];
     }
     else
     {
-        self = [super init];
-        
-        if (self)
-        {
-            self.workQueue = queue;
-            
-            if (![self respondsToSelector:@selector(main)])
-            {
-                self.workBlock = workBlock;
-            }
-            
-            [self start];
-        }
+        self = [self _initWithQueue:queue workBlock:workBlock];
     }
-    
+
     return self;
 }
 
 - (instancetype)initWithQueue:(dispatch_queue_t)queue
 {
-    return [self initWithQueue:queue workBlock:nil];
+    if (![self respondsToSelector:@selector(main)])
+    {
+        [NSException raise:NSInternalInconsistencyException format:@"You must implement -main if you are not providing a workBlock. %s", __PRETTY_FUNCTION__];
+    }
+    else
+    {
+        self = [self _initWithQueue:queue workBlock:NULL];
+    }
+
+    return self;
 }
 
-#pragma mark - CBPFuture methods
-
-- (BOOL)cancel
+- (instancetype)_initWithQueue:(dispatch_queue_t)queue workBlock:(CBPFutureWorkBlock)workBlock
 {
-    return [self assignValue:CBPFutureCanceledValue notify:NO criticalBlock:^{
-        
-        self.isCanceled = YES;
-        self.isRealized = YES;
-        
-    }];
+    self = [super init];
+
+    if (self)
+    {
+        self.workQueue = queue;
+        self.workBlock = workBlock;
+        [self start];
+    }
+
+    return self;
 }
 
-#pragma mark - Internal
+#pragma mark -
 
 - (void)start
 {
@@ -105,21 +110,17 @@ id const CBPFutureCanceledValue = @"CBPFutureCanceledValue";
             else
             {
                 value = self.workBlock(^BOOL {
-                    
-                    return self.isCanceled;
-                    
+
+                    return self.state == CBPDerefStateInvalid;
+
                 });
             }
             
-            [self assignValue:value notify:YES criticalBlock:^ {
-                
-                self.isRealized = YES;
-                
-            }];
+            [self assignValue:value];
         }
     };
     
-    dispatch_queue_t queue = self.workQueue ? self.workQueue : dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_queue_t queue = self.workQueue ? self.workQueue : [[self class] sharedDispatchQueue];
     
     dispatch_async(queue, workBlock);
 }

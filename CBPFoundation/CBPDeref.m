@@ -31,11 +31,19 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
     CBPDerefLockStateRealized,
 };
 
+id const CBPDerefInvalidValue = @"CBPDerefInvalidValue";
+
 @interface CBPDeref ()
 
 @property (nonatomic) NSConditionLock *lock;
 
 @property (nonatomic) id value;
+
+@property CBPDerefState state;
+
+@property (getter = isRealized) BOOL realized;
+
+@property (getter = isValid) BOOL valid;
 
 @end
 
@@ -47,84 +55,13 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
 
     if (self)
     {
+        self.valid = YES;
+        self.state = CBPDerefStateIncomplete;
         self.lock = [[NSConditionLock alloc] initWithCondition:CBPDerefLockStateWaiting];
     }
 
     return self;
 }
-
-- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(CBPDerefRealizationBlock)successBlock timeoutBlock:(dispatch_block_t)timeoutBlock
-{
-    static NSString *const DefaultTimeoutValue = @"DefaultTimeoutValue";
-
-    id value = [self derefWithTimeoutInterval:timeInterval timeoutValue:DefaultTimeoutValue];
-
-    if (value == DefaultTimeoutValue)
-    {
-        if (timeoutBlock)
-        {
-            timeoutBlock();
-        }
-    }
-    else
-    {
-        if (successBlock)
-        {
-            successBlock(value);
-        }
-    }
-}
-
-#pragma mark - CBPDerefSubclass methods
-
-- (BOOL)assignValue:(id)value notify:(BOOL)notify criticalBlock:(dispatch_block_t)criticalBlock
-{
-    BOOL success = NO;
-
-    if ([self.lock tryLockWhenCondition:CBPDerefLockStateWaiting])
-    {
-        @synchronized (self)
-        {
-            success = YES;
-
-            if (criticalBlock)
-            {
-                criticalBlock();
-            }
-
-            self.value = value;
-            [self.lock unlockWithCondition:CBPDerefLockStateRealized];
-
-            if (notify)
-            {
-                CBPDerefRealizationBlock realizationBlock = self.realizationBlock;
-
-                if (realizationBlock)
-                {
-                    dispatch_queue_t dispatchQueue = self.realizationQueue ? self.realizationQueue : dispatch_get_main_queue();
-
-                    dispatch_async(dispatchQueue, ^{
-
-                        realizationBlock(value);
-
-                    });
-                }
-            }
-
-            self.realizationBlock = nil;
-            self.realizationQueue = nil;
-        }
-    }
-
-    return success;
-}
-
-- (BOOL)valueHasBeenAssigned
-{
-    return [self.lock condition] == CBPDerefLockStateRealized;
-}
-
-#pragma mark - CBPDeref methods
 
 - (id)deref
 {
@@ -152,8 +89,92 @@ typedef NS_ENUM(NSInteger, CBPPromiseLockState_t)
             timedout = YES;
         }
     }
-    
+
     return timedout ? timeoutValue : self.value;
+}
+
+- (BOOL)invalidateWithError:(NSError *)error
+{
+    return [self assignValue:CBPDerefInvalidValue error:error notify:YES newState:CBPDerefStateInvalid criticalBlock:NULL];
+}
+
+#pragma mark - CBPDerefSubclass methods
+
+- (BOOL)assignValue:(id)value
+{
+    return [self assignValue:value error:nil notify:YES newState:CBPDerefStateComplete criticalBlock:NULL];
+}
+
+- (BOOL)valueHasBeenAssigned
+{
+    return [self.lock condition] == CBPDerefLockStateRealized;
+}
+
+#pragma mark -
+
+- (BOOL)assignValue:(id)value error:(NSError *)error notify:(BOOL)notify newState:(CBPDerefState)newState criticalBlock:(dispatch_block_t)criticalBlock
+{
+    BOOL success = NO;
+
+    if ([self.lock tryLockWhenCondition:CBPDerefLockStateWaiting])
+    {
+        success = YES;
+
+        @synchronized (self)
+        {
+            self.state = newState;
+            self.value = value;
+            self.realized = YES;
+            [self.lock unlockWithCondition:CBPDerefLockStateRealized];
+
+            if (criticalBlock)
+            {
+                criticalBlock();
+            }
+
+            if (notify)
+            {
+                dispatch_block_t block = NULL;
+
+                if (newState == CBPDerefLockStateRealized)
+                {
+                    if (self.successBlock)
+                    {
+                        CBPDerefSuccessBlock successBlock = self.successBlock;
+
+                        block = ^{
+                            successBlock(value);
+                        };
+                    }
+                }
+                else if (newState == CBPDerefStateInvalid)
+                {
+                    self.valid = NO;
+                    
+                    if (self.invalidBlock)
+                    {
+                        CBPDerefInvalidBlock invalidBlock = self.invalidBlock;
+
+                        block = ^{
+                            invalidBlock(error);
+                        };
+                    }
+                }
+
+                if (block)
+                {
+                    dispatch_queue_t dispatchQueue = self.callbackQueue ? self.callbackQueue : dispatch_get_main_queue();
+                    dispatch_async(dispatchQueue, block);
+                }
+            }
+            
+            self.successBlock = NULL;
+            self.invalidBlock = NULL;
+            self.callbackQueue = NULL;
+        }
+    }
+    
+    return success;
 }
 
 @end

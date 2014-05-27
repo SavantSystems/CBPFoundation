@@ -30,12 +30,7 @@
  */
 extern id const CBPPromiseTimeoutValue;
 
-@interface CBPPromise : CBPDeref <CBPPromise>
-
-/**
- *  @p YES if a value was delivered within the timeout window, otherwise @p NO.
- */
-@property (readonly, getter = isValid) BOOL valid;
+@interface CBPPromise : CBPDeref
 
 /**
  *  Initializes a promise with a timeout value. If a value is not delivered within the timeout window, @p -deref will return @p CBPPromiseTimeoutValue and @p isValid will be @p NO.
@@ -47,8 +42,12 @@ extern id const CBPPromiseTimeoutValue;
 - (instancetype)initWithTimeout:(NSTimeInterval)timeout;
 
 /**
- *  Invalidates the promise.
+ *  Deliver a value to the promise.
+ *
+ *  @param value The value to deliver.
+ *
+ *  @return YES if the promise hasn't already been delivered and hasn't been invalidated; otherwise, NO.
  */
-- (void)invalidate;
+- (BOOL)deliver:(id)value;
 
 @end

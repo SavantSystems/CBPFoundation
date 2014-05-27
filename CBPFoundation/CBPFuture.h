@@ -26,22 +26,16 @@
 #import "CBPDeref.h"
 
 /**
- *  The value returned by a canceled future.
- */
-extern id const CBPFutureCanceledValue;
-
-/**
  *  Use this block to determine if the future is canceled or not. Similar to an NSOperation, the value of this block should be checked occasionally in longer running work blocks.
- *  This block is a convenience to avoid capturing the future in the block and causing a retain cycle.
  *
  *  @return YES if the future has been canceled, otherwise NO.
  */
 typedef BOOL (^CBPFutureCanceledBlock)(void);
 
 /**
- *  Compute the value to cache. This block will be ignored if -main is overriden.
+ *  Compute the value to cache.
  *
- *  @param isCanceled A convenience block to determine if the future is canclled or not. Its value should be checked occasionally in longer running work blocks.
+ *  @param isCanceled A convenience block to determine if the future is canceled or not. Its value should be checked occasionally in longer running work blocks.
  *
  *  @return The result of the work block which will be cached.
  */
@@ -49,22 +43,22 @@ typedef id (^CBPFutureWorkBlock)(CBPFutureCanceledBlock isCanceled);
 
 #pragma mark -
 
-@interface CBPFuture : CBPDeref <CBPFuture>
+@interface CBPFuture : CBPDeref
 
 /**
  *  Initializes and starts a new future.
  *
  *  @param queue     The queue on which to perform the work. If nil, a global concurrent background queue will be used.
- *  @param workBlock The work block whose value will be computed in the background and cached.
+ *  @param workBlock The work block whose value will be computed in the background and cached. An exception will be thrown if @p -main is also implemented.
  *
  *  @return An initialized future.
  */
 - (instancetype)initWithQueue:(dispatch_queue_t)queue workBlock:(CBPFutureWorkBlock)workBlock;
 
 /**
- *  Initializes and starts a new future.
+ *  Initializes and starts a new future. @p -main must be implemented or an exception will be thrown.
  *
- *  @param queue The queue on which to perform the work. If nil, a global concurrent background queue will be used.
+ *  @param queue The queue on which to perform the work. If nil, an internal concurrent queue will be used.
  *
  *  @return An initialized future.
  */
@@ -77,7 +71,7 @@ typedef id (^CBPFutureWorkBlock)(CBPFutureCanceledBlock isCanceled);
 @interface CBPFuture (ForSubclassEyesOnly)
 
 /**
- *  Compute the value to cache. This method takes precedence over the workBlock.
+ *  Compute the value to cache.
  *
  *  @return The result of the method which will be cached.
  */

@@ -22,29 +22,77 @@
  THE SOFTWARE.
  */
 
-#import "CBPSynchronizationPrimitives.h"
+@import Foundation;
 
-typedef void (^CBPDerefRealizationBlock)(id value);
+typedef NS_ENUM(NSUInteger, CBPDerefState)
+{
+    CBPDerefStateIncomplete,
+    CBPDerefStateComplete,
+    CBPDerefStateInvalid
+};
 
-@interface CBPDeref : NSObject <CBPDeref>
+typedef void (^CBPDerefSuccessBlock)(id value);
+
+typedef void (^CBPDerefInvalidBlock)(NSError *error);
+
+extern id const CBPDerefInvalidValue;
+
+@interface CBPDeref : NSObject
 
 /**
- *  This block will be called when a value has been realized.
+ *  Returns the current state of the deref.
  */
-@property (copy) CBPDerefRealizationBlock realizationBlock;
+@property (readonly) CBPDerefState state;
 
 /**
- *  The queue on which to perform the realizationBlock. If no queue is specified, the main queue will be used.
+ *  Returns YES if the deref is complete, or has been invalidated; otherwise, NO.
  */
-@property dispatch_queue_t realizationQueue;
+@property (readonly, getter = isRealized) BOOL realized;
 
 /**
- *  If a value is successfully deref'd within the timeout, the success block will be performed with the value, otherwise the timeout block will be called.
+ *  Returns YES if the deref is valid; otherwise, NO.
+ */
+@property (readonly, getter = isValid) BOOL valid;
+
+/**
+ *  Waits indefinitely until the deref has been realized or invalidated.
  *
- *  @param timeInterval The amount of time to wait for a value to be made available (in seconds).
- *  @param successBlock Called with the deref'd or cached value.
- *  @param timeoutBlock Called when a value was not made available within the timeout.
+ *  @return The realized value.
  */
-- (void)derefWithTimeout:(NSTimeInterval)timeInterval successBlock:(CBPDerefRealizationBlock)successBlock timeoutBlock:(dispatch_block_t)timeoutBlock;
+- (id)deref;
+
+/**
+ *  Blocks until a value has been realized, or the timeout has expired.
+ *
+ *  @param timeoutInterval The amount of time to block.
+ *  @param timeoutValue    The value returned if the timeout is reached before a value has been realized.
+ *
+ *  @return The realized value or @p timeoutValue if a value was not realized in the given time.
+ */
+- (id)derefWithTimeoutInterval:(NSTimeInterval)timeoutInterval timeoutValue:(id)timeoutValue;
+
+/**
+ *  Invalidate the deref so that no values can be realized. @p -deref and @p -derefWithTimeoutInterval:timeoutValue: will both return @p CBPDerefInvalidValue.
+ *
+ *  @param error The reason for invalidating the deref, or nil.
+ *
+ *  @return YES if the promise could be invalidated; otherwise, NO.
+ */
+- (BOOL)invalidateWithError:(NSError *)error;
+
+/**
+ *  This block will be called when the deref's value has been realized.
+ */
+@property (copy) CBPDerefSuccessBlock successBlock;
+
+/**
+ *  This block will be called when a deref is invalidated.
+ */
+@property (copy) CBPDerefInvalidBlock invalidBlock;
+
+/**
+ *  The queue on which to perform the success/invalid blocks. If no queue is specified, the main queue will be used.
+ */
+@property dispatch_queue_t callbackQueue;
 
 @end

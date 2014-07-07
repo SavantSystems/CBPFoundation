@@ -74,7 +74,7 @@
 /**
  *  YES if the task is running, otherwise NO.
  */
-@property (readonly) BOOL isRunning;
+@property (readonly, getter = isRunning) BOOL running;
 
 /**
  *  Starts the task.

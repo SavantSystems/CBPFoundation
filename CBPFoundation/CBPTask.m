@@ -27,7 +27,7 @@
 
 @interface CBPTask ()
 
-@property BOOL isRunning;
+@property (getter = isRunning) BOOL running;
 
 @property NSUInteger numberOfTimesTaskWasStarted;
 
@@ -49,7 +49,7 @@
         }
         else if (!self.isRunning)
         {
-            self.isRunning = YES;
+            self.running = YES;
             self.numberOfTimesTaskWasStarted++;
             started = YES;
             [self _startTask];
@@ -67,7 +67,7 @@
         
         if (self.isRunning)
         {
-            self.isRunning = NO;
+            self.running = NO;
             stopped = YES;
             [self _stopTask];
         }
